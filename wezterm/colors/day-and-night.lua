@@ -29,6 +29,7 @@ local light_theme = {
   },
   window_frame = {
     active_titlebar_bg = "#ffffff",
+    font_size = 15.0,
   },
 }
 
@@ -43,33 +44,27 @@ local dark_theme = {
     selection_fg = "#c9d1d9",
     ansi = {'#484f58', '#ec8e2c', '#58a6ff', '#d29922', '#58a6ff', '#bc8cff', '#39c5cf', '#b1bac4',},
     brights = {'#6e7681', '#fdac54', '#79c0ff', '#e3b341', '#79c0ff', '#d2a8ff', '#56d4dd', '#ffffff',},
-    -- tab_bar = {
-    --   background = '#000000',
-    --   active_tab = {
-    --     bg_color = '#000000',
-    --     fg_color = '#ffffff',
-    --   },
-    --   inactive_tab = {
-    --     bg_color = '#000000',
-    --     fg_color = '#888888',
-    --   },
-    --   inactive_tab_hover = {
-    --     bg_color = '#444444',
-    --     fg_color = '#bbbbbb',
-    --   },
-    --   inactive_tab_edge = '#888888',
-    -- },
+    tab_bar = {
+      background = '#000000',
+      active_tab = {
+        bg_color = '#000000',
+        fg_color = '#ffffff',
+      },
+      inactive_tab = {
+        bg_color = '#333333',
+        fg_color = '#888888',
+      },
+      inactive_tab_hover = {
+        bg_color = '#444444',
+        fg_color = '#bbbbbb',
+      },
+      inactive_tab_edge = '#888888',
+    },
   },
   window_frame = {
     -- font = wezterm.font { family = '"MesloLGS NF', weight = 'Bold' },
     active_titlebar_bg = "#000000",
-    active_titlebar_fg = '#ffffff',
-    inactive_titlebar_bg = '#000000',
-    inactive_titlebar_fg = '#cccccc',
-    inactive_titlebar_border_bottom = '#ffffff',
-    active_titlebar_border_bottom = '#ffffff',
-    border_bottom_height = '0.25cell',
-    font_size = 13.0,
+    font_size = 15.0,
   },
 }
 
