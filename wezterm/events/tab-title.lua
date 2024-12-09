@@ -13,13 +13,6 @@ local M = {}
 
 local __cells__ = {} -- wezterm FormatItems (ref: https://wezfurlong.org/wezterm/config/lua/wezterm/format.html)
 
--- stylua: ignore
-local colors = {
-   default   = { bg = '#45475a', fg = '#1c1b19' },
-   is_active = { bg = '#7FB4CA', fg = '#11111b' },
-   hover     = { bg = '#587d8c', fg = '#1c1b19' },
-}
-
 local _set_process_name = function(s)
   local a = string.gsub(s, "(.*[/\\])(.*)", "%2")
   return a:gsub("%.exe$", "")
@@ -70,17 +63,6 @@ M.setup = function()
     local process_name = _set_process_name(tab.active_pane.foreground_process_name)
     local is_admin = _check_if_admin(tab.active_pane.title)
     local title = _set_title(process_name, tab.active_pane.title, max_width, (is_admin and 8))
-
-    if tab.is_active then
-      bg = colors.is_active.bg
-      fg = colors.is_active.fg
-    elseif hover then
-      bg = colors.hover.bg
-      fg = colors.hover.fg
-    else
-      bg = colors.default.bg
-      fg = colors.default.fg
-    end
 
     local has_unseen_output = false
     for _, pane in ipairs(tab.panes) do

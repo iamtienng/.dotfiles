@@ -1,7 +1,7 @@
 k9s:
   ui:
-    skin: catppuccin-mocha-transparent
-    enableMouse: false
+    skin: github-dark-colorblind
+    enableMouse: true
     headless: false
     logoless: false
     crumbsless: false
