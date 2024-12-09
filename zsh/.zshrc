@@ -82,5 +82,5 @@ alias kdebug='
   fi
 '
 if [ -f ~/.dotfiles/Brewfile ]; then
-  alias brewup="brew bundle --file=~/iamtienng/dotfiles/Brewfile"
+  alias brewup="brew bundle --file=~/.dotfiles/Brewfile"
 fi

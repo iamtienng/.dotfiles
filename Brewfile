@@ -6,13 +6,16 @@ brew "helm"
 brew "helmfile"
 tap "fluxcd/tap"
 brew "fluxcd/tap/flux@2.3"
+
 # UI
 brew "k9s"
 cask "lens", greedy: true
+
 # Cloud
 brew "azure-cli"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
+
 # Scanner
 brew "trivy"
 
@@ -29,6 +32,11 @@ brew "git"
 brew "age"
 brew "go-task"
 brew "btop"
+brew "nmap"
+brew "net-tools"
+brew "tcpdump"
+
+
 # -- Other Apps
 cask "karabiner-elements", greedy: true
 cask "1password-cli", greedy: true
@@ -63,3 +71,4 @@ cask "font-hack-nerd-font", greedy: true
 cask "font-jetbrains-mono-nerd-font", greedy: true
 cask "font-sf-pro", greedy: true
 cask "sf-symbols", greedy: true
+cask "font-meslo-lg-nerd-font", greedy: true
