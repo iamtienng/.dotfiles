@@ -1,5 +1,4 @@
 return {
-  { "nvim-telescope/telescope-ui-select.nvim" },
   {
     -- To get keymaps with Telescope
     --  - LayzVim: <leader>sk
