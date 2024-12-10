@@ -49,9 +49,6 @@ else
 fi
 # Set to vi mode
 set -o vi
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
 
 # history
 HISTFILE=~/.zsh_history
@@ -68,6 +65,9 @@ if [ -d "/Applications/Docker.app" ]; then
 fi
 
 # aliases
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
 alias hc="history -c"
 alias hg="history | grep "
 alias expand_path='realpath'

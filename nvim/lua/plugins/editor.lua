@@ -1,4 +1,8 @@
 return { -- https://www.lazyvim.org/plugins/editor
+
+  {
+    "mg979/vim-visual-multi",
+  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
