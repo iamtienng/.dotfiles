@@ -1,4 +1,5 @@
 return {
+  { "nvim-telescope/telescope-ui-select.nvim" },
   {
     -- To get keymaps with Telescope
     --  - LayzVim: <leader>sk
@@ -42,7 +43,9 @@ return {
       --   },
       -- },
       extensions = {
-        ["ui-select"] = {},
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown(),
+        },
       },
     },
   },
