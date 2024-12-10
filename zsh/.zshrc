@@ -7,14 +7,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # p10k config
 ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
-# POWERLEVEL9K_MODE=ascii
-# POWERLEVEL9K_DISABLE_HOT_RELOAD=true
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(history)
-# POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0.003
-# POWERLEVEL9K_INSTANT_PROMPT=quiet
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-# POWERLEVEL9K_DIR_BACKGROUND=0
 
 plugins=(
   git
@@ -48,7 +40,7 @@ else
   export EDITOR='nvim'
 fi
 # Set to vi mode
-set -o vi
+# set -o vi
 
 # history
 HISTFILE=~/.zsh_history
@@ -86,3 +78,4 @@ alias kdebug='
 if [ -f ~/.dotfiles/Brewfile ]; then
   alias brewup="brew bundle --file=~/.dotfiles/Brewfile"
 fi
+
