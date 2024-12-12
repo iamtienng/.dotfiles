@@ -9,7 +9,6 @@ brew "fluxcd/tap/flux@2.3"
 
 # UI
 brew "k9s"
-cask "lens", greedy: true
 
 # Cloud
 brew "azure-cli"
