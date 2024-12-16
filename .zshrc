@@ -7,6 +7,8 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # p10k config
 ZSH_THEME="powerlevel10k/powerlevel10k"
+export LANG=en_US.UTF-8
+export DIRENV_LOG_FORMAT=""
 
 plugins=(
   git
@@ -107,4 +109,10 @@ alias kdebug='
 if [ -f ~/.dotfiles/Brewfile ]; then
   alias brewup="brew bundle --file=~/.dotfiles/Brewfile"
 fi
+
+# env vars from .zshenv 
+export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
+export AWS_PROFILE="$AWS_PROFILE"
+export ERSTE_AWS_ACCESS_KEY_ID="$ERSTE_AWS_ACCESS_KEY_ID"
+export ERSTE_AWS_SECRET_ACCESS_KEY="$ERSTE_AWS_SECRET_ACCESS_KEY"
 

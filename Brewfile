@@ -38,6 +38,8 @@ brew "tcpdump"
 brew "gnupg"
 brew "pinentry"
 brew "pinentry-mac"
+tap "jorgelbg/tap"
+brew "pinentry-touchid"
 
 # -- Languages
 brew "asdf"

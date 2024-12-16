@@ -16,8 +16,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "LazyFile",
-    opts = {
-      scope = { enabled = false },
-    },
+    main = "ibl",
+    opts = {},
   },
 }
