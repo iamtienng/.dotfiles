@@ -12,11 +12,8 @@ brew "k9s"
 
 # Cloud
 brew "azure-cli"
-brew "Azure/kubelogin/kubelogin"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
-tap "hashicorp/tap"
-brew "hashicorp/tap/terraform"
 
 # Scanner
 brew "trivy"
@@ -38,6 +35,8 @@ brew "go-task"
 brew "btop"
 brew "nmap"
 brew "tcpdump"
+brew "gnupg"
+brew "pinentry"
 
 # -- Languages
 brew "asdf"
