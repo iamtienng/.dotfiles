@@ -12,8 +12,11 @@ brew "k9s"
 
 # Cloud
 brew "azure-cli"
+brew "Azure/kubelogin/kubelogin"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
 
 # Scanner
 brew "trivy"
@@ -25,6 +28,8 @@ brew "jq"
 brew "yq"
 brew "coreutils"
 brew "sops"
+brew "bind"
+brew "tcptraceroute"
 brew "curl"
 brew "wget"
 brew "git"
@@ -32,17 +37,18 @@ brew "age"
 brew "go-task"
 brew "btop"
 brew "nmap"
-brew "net-tools"
 brew "tcpdump"
 
+# -- Languages
+brew "asdf"
 
 # -- Other Apps
 cask "karabiner-elements", greedy: true
 cask "1password-cli", greedy: true
 cask "pgadmin4", greedy: true
-cask "tg-pro", greedy: true
 
 # -- Editor
+brew "tmux"
 cask "wezterm", greedy: true
 brew "neovim"
 cask "obsidian", greedy: true

@@ -1,3 +1,4 @@
+# Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -6,7 +7,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # p10k config
 ZSH_THEME="powerlevel10k/powerlevel10k"
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 plugins=(
   git
@@ -16,9 +16,10 @@ plugins=(
   direnv
   dotenv
   kubectl
+  asdf
+  #NOTE: these are custom plugins, remember to download it
+  evalcache
 )
-
-source $ZSH/oh-my-zsh.sh
 
 # zsh config
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
@@ -27,6 +28,13 @@ DISABLE_MAGIC_FUNCTIONS="true"
 # Auto-update behavior
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
+
+# Other env_vars before load plugins
+# -- EVALCACHE
+export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+source $ZSH/oh-my-zsh.sh
 
 # zsh plugins from Brew
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -39,8 +47,11 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
 # Set to vi mode
-# set -o vi
+set -o vi
 
 # history
 HISTFILE=~/.zsh_history
@@ -51,15 +62,33 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
 # path
+# ASDF
+export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME=".config/asdf/.tool-versions"
+# K9s
 export K9S_CONFIG_DIR=".config/k9s"
+# Docker Desktop
 if [ -d "/Applications/Docker.app" ]; then
   path+=("$HOME/.docker/bin")
 fi
+# kubectl
+if type kubectl &>/dev/null; then
+  # eval "$(kubectl completion zsh)"
+  _evalcache kubectl completion zsh
+fi
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Prom'pt & Completion 
+if type brew &>/dev/null; then
+  fpath+=$(brew --prefix)/share/zsh-completions
+  fpath+=$(brew --prefix)/share/zsh/site-functions
+  autoload -Uz compinit promptinit
+  compinit -u
+  promptinit
+fi
+zstyle ':completion:*' menu select
 
 # aliases
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
+alias asdfupdate="asdf latest --all && asdf install"
 alias hc="history -c"
 alias hg="history | grep "
 alias expand_path='realpath'
@@ -79,5 +108,3 @@ if [ -f ~/.dotfiles/Brewfile ]; then
   alias brewup="brew bundle --file=~/.dotfiles/Brewfile"
 fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

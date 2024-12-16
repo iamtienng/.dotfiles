@@ -1,7 +1,7 @@
 local platform = require("utils.platform")
 local wezterm = require("wezterm")
 
-local font = "MesloLGS NF"
+local font = "MesloLGS Nerd Font"
 
 local font_size = platform().is_mac and 16 or 10
 -- >- <- >= <= == ~= !=
@@ -10,7 +10,7 @@ return {
   -- font = wezterm.font(font),
   font = wezterm.font_with_fallback({
     font,
-    "MesloLGS NF",
+    "MesloLGS Nerd Font",
   }),
   font_size = font_size,
 
