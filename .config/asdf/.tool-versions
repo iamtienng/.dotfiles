@@ -1,7 +1,7 @@
-golang latest
-nodejs latest
-python latest
-rust latest
-terraform latest
-terragrunt latest
+golang 1.23.4
+nodejs 23.4.0
+python 3.13.1t
+rust 1.83.0
+terraform 1.10.2
+terragrunt 0.69.13
 kubelogin 0.1.6
