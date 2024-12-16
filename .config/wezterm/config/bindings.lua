@@ -76,5 +76,18 @@ return {
       key = "Backspace",
       action = wezterm.action.SendKey({ mods = "CTRL", key = "u" }),
     },
+    {
+      key = "f",
+      mods = "CTRL",
+      action = wezterm.action_callback(function(win, pane)
+        local cmd = "~/.config/scripts/tmux-sessionizer" -- Path to your script
+        win:perform_action(
+          wezterm.action.SpawnCommandInNewTab({
+            args = { "/bin/zsh", "-c", cmd },
+          }),
+          pane
+        )
+      end),
+    },
   },
 }

@@ -91,6 +91,10 @@ zstyle ':completion:*' menu select
 
 # aliases
 alias asdfupdate="asdf latest --all && asdf install"
+# Ensure the script is executable
+if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
+    chmod +x ~/.config/scripts/tmux-sessionizer
+fi
 alias hc="history -c"
 alias hg="history | grep "
 alias expand_path='realpath'
