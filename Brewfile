@@ -37,6 +37,7 @@ brew "nmap"
 brew "tcpdump"
 brew "gnupg"
 brew "pinentry"
+brew "pinentry-mac"
 
 # -- Languages
 brew "asdf"
