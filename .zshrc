@@ -119,7 +119,9 @@ alias kdebug='
   fi
 '
 if [ -f ~/.config/Brewfile ]; then
-  alias brewup="brew bundle --file=~/.config/Brewfile"
+  alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
+else
+  alias brewup="brew update && brew upgrade"
 fi
 
 # env vars from .zshenv 
