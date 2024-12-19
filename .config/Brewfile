@@ -40,6 +40,7 @@ brew "pinentry"
 brew "pinentry-mac"
 tap "jorgelbg/tap"
 brew "pinentry-touchid"
+brew "telnet"
 
 # -- Languages
 brew "asdf"

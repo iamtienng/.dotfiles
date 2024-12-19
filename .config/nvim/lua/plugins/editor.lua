@@ -20,10 +20,6 @@ return { -- https://www.lazyvim.org/plugins/editor
       },
     },
   },
-  { -- NOTE: flash is disabled by leap
-    "folke/flash.nvim",
-    enabled = false,
-  },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     -- will be disabled when mini-diffs is enabled

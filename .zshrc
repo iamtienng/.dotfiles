@@ -90,7 +90,15 @@ fi
 zstyle ':completion:*' menu select
 
 # aliases
-alias asdfupdate="asdf latest --all && asdf install"
+asdfup() {
+  asdf plugin-update --all
+  for plugin in $(asdf plugin list); do
+    latest=$(asdf latest "$plugin")
+    asdf install "$plugin" "$latest"
+    asdf global "$plugin" "$latest"
+  done
+}
+alias asdfup="asdfup"
 # Ensure the script is executable
 if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
     chmod +x ~/.config/scripts/tmux-sessionizer
@@ -110,8 +118,8 @@ alias kdebug='
     kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils -- bash
   fi
 '
-if [ -f ~/.dotfiles/Brewfile ]; then
-  alias brewup="brew bundle --file=~/.dotfiles/Brewfile"
+if [ -f ~/.config/Brewfile ]; then
+  alias brewup="brew bundle --file=~/.config/Brewfile"
 fi
 
 # env vars from .zshenv 
