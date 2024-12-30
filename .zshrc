@@ -130,3 +130,5 @@ export AWS_PROFILE="$AWS_PROFILE"
 export ERSTE_AWS_ACCESS_KEY_ID="$ERSTE_AWS_ACCESS_KEY_ID"
 export ERSTE_AWS_SECRET_ACCESS_KEY="$ERSTE_AWS_SECRET_ACCESS_KEY"
 
+# To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
+[[ ! -f ~/.config/zshrc/.p10k.zsh ]] || source ~/.config/zshrc/.p10k.zsh

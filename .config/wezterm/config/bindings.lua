@@ -83,7 +83,7 @@ return {
         local cmd = "~/.config/scripts/tmux-sessionizer" -- Path to your script
         win:perform_action(
           wezterm.action.SpawnCommandInNewTab({
-            args = { "/bin/zsh", "-c", cmd },
+            args = { "zsh", "-c", cmd },
           }),
           pane
         )
