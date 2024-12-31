@@ -53,7 +53,7 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 # Set to vi mode
-set -o vi
+# set -o vi
 
 # history
 HISTFILE=~/.zsh_history
