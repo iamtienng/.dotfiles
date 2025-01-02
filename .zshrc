@@ -68,6 +68,7 @@ setopt SHARE_HISTORY
 export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME=".config/asdf/.tool-versions"
 # K9s
 export K9S_CONFIG_DIR=".config/k9s"
+export TMS_CONFIG_FILE="~/.config/tms/config.toml"
 # Docker Desktop
 if [ -d "/Applications/Docker.app" ]; then
   path+=("$HOME/.docker/bin")
@@ -123,6 +124,7 @@ if [ -f ~/.config/Brewfile ]; then
 else
   alias brewup="brew update && brew upgrade"
 fi
+alias ts="~/.config/scripts/tmux-sessionizer"
 
 # env vars from .zshenv 
 export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
