@@ -1,0 +1,20 @@
+theme = light:xcodelighthc,dark:iTerm2 Pastel Dark Background
+auto-update = off
+
+font-size = 18
+window-inherit-font-size = true
+font-family = MesloLGS Nerd Font Mono
+
+mouse-hide-while-typing = true
+window-decoration = true
+macos-titlebar-style = hidden
+
+macos-option-as-alt = true
+
+shell-integration = detect
+shell-integration-features = no-cursor
+cursor-style = block
+
+confirm-close-surface = true
+
+command = $HOME/.config/scripts/ghostty-initial
