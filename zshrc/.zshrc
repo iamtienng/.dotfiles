@@ -124,7 +124,6 @@ if [ -f ~/.config/Brewfile ]; then
 else
   alias brewup="brew update && brew upgrade"
 fi
-alias ts="~/.config/scripts/tmux-sessionizer"
 
 # env vars from .zshenv 
 export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
