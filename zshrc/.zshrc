@@ -100,7 +100,15 @@ asdfup() {
   done
 }
 alias asdfup="asdfup"
+if [ -f ~/.config/Brewfile ]; then
+  alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
+else
+  alias brewup="brew update && brew upgrade"
+fi
 # Ensure the script is executable
+if [[ -f ~/.config/scripts/ghostty-tmux-initializer ]]; then
+    chmod +x ~/.config/scripts/ghostty-tmux-initializer
+fi
 if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
     chmod +x ~/.config/scripts/tmux-sessionizer
 fi
@@ -119,17 +127,6 @@ alias kdebug='
     kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils -- bash
   fi
 '
-if [ -f ~/.config/Brewfile ]; then
-  alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
-else
-  alias brewup="brew update && brew upgrade"
-fi
-
-# env vars from .zshenv 
-export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
-export AWS_PROFILE="$AWS_PROFILE"
-export ERSTE_AWS_ACCESS_KEY_ID="$ERSTE_AWS_ACCESS_KEY_ID"
-export ERSTE_AWS_SECRET_ACCESS_KEY="$ERSTE_AWS_SECRET_ACCESS_KEY"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
 [[ ! -f ~/.config/zshrc/.p10k.zsh ]] || source ~/.config/zshrc/.p10k.zsh

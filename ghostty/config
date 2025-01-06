@@ -17,4 +17,4 @@ cursor-style = block
 
 confirm-close-surface = true
 
-command = $HOME/.config/scripts/ghostty-initial
+command = $HOME/.config/scripts/ghostty-tmux-initializer
