@@ -41,6 +41,8 @@ brew "pinentry-mac"
 tap "jorgelbg/tap"
 brew "pinentry-touchid"
 brew "telnet"
+tap "cormacrelf/tap"
+brew "dark-notify"
 
 # -- Languages
 brew "asdf"

@@ -19,7 +19,7 @@ return {
           vim.cmd("colorscheme github_dark_colorblind")
         else
           vim.opt.background = "light"
-          vim.cmd("colorscheme github_light")
+          vim.cmd("colorscheme github_light_colorblind")
         end
       end
       set_theme()
@@ -46,7 +46,7 @@ return {
     opts = {
       -- Let LazyVim use the same dynamic colorscheme
       colorscheme = function()
-        return vim.opt.background:get() == "dark" and "github_dark_colorblind" or "github_light"
+        return vim.opt.background:get() == "dark" and "github_dark_colorblind" or "github_light_colorblind"
       end,
     },
   },
