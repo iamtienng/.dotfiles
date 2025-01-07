@@ -7,6 +7,7 @@ vim.g.have_nerd_font = true
 -- Use `opt` for short
 local opt = vim.opt
 
+opt.cmdheight = 2
 -- Line numbers
 opt.number = true
 opt.relativenumber = true

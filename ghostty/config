@@ -1,4 +1,4 @@
-theme = light:xcodelighthc,dark:iTerm2 Pastel Dark Background
+theme = light:GitHub,dark:Github Dark
 auto-update = off
 
 font-size = 18
@@ -6,7 +6,11 @@ window-inherit-font-size = true
 font-family = MesloLGS Nerd Font Mono
 
 mouse-hide-while-typing = true
-window-decoration = true
+window-decoration = false 
+window-padding-balance = true 
+window-padding-color = background
+window-padding-x = 0,0
+window-padding-y = 0,0
 macos-titlebar-style = hidden
 
 macos-option-as-alt = true
