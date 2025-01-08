@@ -1,7 +1,7 @@
 theme = light:GitHub,dark:Github Dark
 auto-update = off
 
-font-size = 18
+font-size = 17
 window-inherit-font-size = true
 font-family = MesloLGS Nerd Font Mono
 
