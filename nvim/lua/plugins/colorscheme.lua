@@ -4,6 +4,60 @@ return {
     lazy = false,
   },
   {
+    "nvim-lualine/lualine.nvim",
+    opts = function()
+      local function set_lualine_theme()
+        -- Determine system theme (macOS example: uses `osascript`)
+        local system_theme =
+          vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null || echo Light")
+        local is_dark = system_theme:find("Dark") ~= nil
+        local theme
+
+        if is_dark then
+          theme = {
+            normal = {
+              a = { fg = "#ffffff", bg = "#101216", gui = "bold" },
+              b = { fg = "#ffffff", bg = "#101216" },
+              c = { fg = "#ffffff", bg = "#101216" },
+            },
+            inactive = {
+              a = { fg = "#636e7b", bg = "#101216" },
+              b = { fg = "#636e7b", bg = "#101216" },
+              c = { fg = "#636e7b", bg = "#101216" },
+            },
+          }
+          vim.opt.background = "dark"
+        else
+          theme = {
+            normal = {
+              a = { fg = "#000000", bg = "#f4f4f4", gui = "bold" },
+              b = { fg = "#000000", bg = "#f4f4f4" },
+              c = { fg = "#000000", bg = "#f4f4f4" },
+            },
+            inactive = {
+              a = { fg = "#999999", bg = "#f4f4f4" },
+              b = { fg = "#999999", bg = "#f4f4f4" },
+              c = { fg = "#999999", bg = "#f4f4f4" },
+            },
+          }
+          vim.opt.background = "light"
+        end
+
+        -- Apply the theme only if it differs from the current state
+        require("lualine").setup({ options = { theme = theme } })
+      end
+
+      vim.schedule(set_lualine_theme) -- Schedule the initial theme setup after LazyVim's startup
+
+      -- Automatically update the theme when the background option changes
+      vim.api.nvim_create_autocmd("OptionSet", {
+        pattern = "background",
+        callback = set_lualine_theme,
+      })
+    end,
+  },
+
+  {
     "projekt0n/github-nvim-theme",
     name = "github-theme",
     lazy = false,
@@ -45,7 +99,7 @@ return {
 
         if is_dark then
           vim.opt.background = "dark"
-          require('github-theme').setup({
+          require("github-theme").setup({
             options = {
               transparent = false,
               hide_end_of_buffer = true,
@@ -57,7 +111,7 @@ return {
           vim.cmd("colorscheme github_dark_colorblind")
         else
           vim.opt.background = "light"
-          require('github-theme').setup({
+          require("github-theme").setup({
             options = {
               transparent = false,
               hide_end_of_buffer = true,
@@ -80,54 +134,13 @@ return {
     end,
   },
   {
-    "nvim-lualine/lualine.nvim",
-    opts = function()
-      local function get_lualine_theme()
-        local background = vim.opt.background:get()
-        if background == "dark" then
-          return {
-            normal = {
-              a = { fg = "#ffffff", bg = "#101216", gui = "bold" },
-              b = { fg = "#ffffff", bg = "#101216" },
-              c = { fg = "#ffffff", bg = "#101216" },
-            },
-            inactive = {
-              a = { fg = "#636e7b", bg = "#101216" },
-              b = { fg = "#636e7b", bg = "#101216" },
-              c = { fg = "#636e7b", bg = "#101216" },
-            },
-          }
-        else
-          return {
-            normal = {
-              a = { fg = "#000000", bg = "#f4f4f4", gui = "bold" },
-              b = { fg = "#000000", bg = "#f4f4f4" },
-              c = { fg = "#000000", bg = "#f4f4f4" },
-            },
-            inactive = {
-              a = { fg = "#999999", bg = "#f4f4f4" },
-              b = { fg = "#999999", bg = "#f4f4f4" },
-              c = { fg = "#999999", bg = "#f4f4f4" },
-            },
-          }
-        end
-      end
-
-      return {
-        options = {
-          theme = get_lualine_theme(),
-        },
-      }
-    end,
-  },
-  {
     "LazyVim/LazyVim",
     opts = {
       -- Let LazyVim use the same dynamic colorscheme
       colorscheme = function()
-        return vim.opt.background:get() == "dark" and "github_dark_colorblind" or "github_light_colorblind"
+        return vim.opt.background == "dark" and "github_dark_colorblind"
+          or "github_light_colorblind"
       end,
     },
   },
 }
-
