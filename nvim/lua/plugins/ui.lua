@@ -1,11 +1,14 @@
 return { -- https://www.lazyvim.org/plugins/ui
-{
+  {
     "akinsho/bufferline.nvim",
-    event = "VeryLazy"
-}, {
+    event = "VeryLazy",
+  },
+  {
     require("noice").setup({
-    cmdline = {
+      cmdline = {
         view = "cmdline",
-    },
-    color = { fg = "#ff9e64" },
-})}}
+      },
+      color = { fg = "#ff9e64" },
+    }),
+  },
+}

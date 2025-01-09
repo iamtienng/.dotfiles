@@ -1,77 +1,19 @@
 return {
   {
-    "vimpostor/vim-lumen",
-    lazy = false,
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function()
-      local function set_lualine_theme()
-        -- Determine system theme (macOS example: uses `osascript`)
-        local system_theme =
-          vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null || echo Light")
-        local is_dark = system_theme:find("Dark") ~= nil
-        local theme
-
-        if is_dark then
-          theme = {
-            normal = {
-              a = { fg = "#ffffff", bg = "#101216", gui = "bold" },
-              b = { fg = "#ffffff", bg = "#101216" },
-              c = { fg = "#ffffff", bg = "#101216" },
-            },
-            inactive = {
-              a = { fg = "#636e7b", bg = "#101216" },
-              b = { fg = "#636e7b", bg = "#101216" },
-              c = { fg = "#636e7b", bg = "#101216" },
-            },
-          }
-          vim.opt.background = "dark"
-        else
-          theme = {
-            normal = {
-              a = { fg = "#000000", bg = "#f4f4f4", gui = "bold" },
-              b = { fg = "#000000", bg = "#f4f4f4" },
-              c = { fg = "#000000", bg = "#f4f4f4" },
-            },
-            inactive = {
-              a = { fg = "#999999", bg = "#f4f4f4" },
-              b = { fg = "#999999", bg = "#f4f4f4" },
-              c = { fg = "#999999", bg = "#f4f4f4" },
-            },
-          }
-          vim.opt.background = "light"
-        end
-
-        -- Apply the theme only if it differs from the current state
-        require("lualine").setup({ options = { theme = theme } })
-      end
-
-      vim.schedule(set_lualine_theme) -- Schedule the initial theme setup after LazyVim's startup
-
-      -- Automatically update the theme when the background option changes
-      vim.api.nvim_create_autocmd("OptionSet", {
-        pattern = "background",
-        callback = set_lualine_theme,
-      })
-    end,
-  },
-
-  {
     "projekt0n/github-nvim-theme",
-    name = "github-theme",
-    lazy = false,
-    priority = 1000,
+  },
+  {
+    "cormacrelf/dark-notify",
     config = function()
       local palettes = {
         all = {
-          bg1 = "#101216", -- Base background color
+          bg1 = "#101216", -- Base background color for dark theme
         },
       }
 
       local groups = {
         all = {
-          Normal = { bg = "#101216", fg = "fg1" },
+          Normal = { bg = "#101216", fg = "#ffffff" },
           NormalFloat = { bg = "#101216" },
           LineNr = { fg = "#444c56" },
         },
@@ -79,25 +21,20 @@ return {
 
       local light_palettes = {
         all = {
-          bg1 = "#f4f4f4", -- Base background color
+          bg1 = "#f4f4f4", -- Base background color for light theme
         },
       }
 
       local light_groups = {
         all = {
-          Normal = { bg = "#f4f4f4", fg = "fg1" },
+          Normal = { bg = "#f4f4f4", fg = "#000000" },
           NormalFloat = { bg = "#f4f4f4" },
           LineNr = { fg = "#999999" },
         },
       }
 
-      local function set_theme()
-        -- Determine system theme (macOS example: uses `osascript`)
-        local system_theme =
-          vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null || echo Light")
-        local is_dark = system_theme:find("Dark") ~= nil
-
-        if is_dark then
+      local function set_theme(mode)
+        if mode == "dark" then
           vim.opt.background = "dark"
           require("github-theme").setup({
             options = {
@@ -124,23 +61,45 @@ return {
         end
       end
 
-      set_theme()
+      local function set_lualine_theme(mode)
+        local theme
+        if mode == "dark" then
+          theme = {
+            normal = {
+              a = { fg = "#ffffff", bg = "#101216", gui = "bold" },
+              b = { fg = "#ffffff", bg = "#101216" },
+              c = { fg = "#ffffff", bg = "#101216" },
+            },
+            inactive = {
+              a = { fg = "#636e7b", bg = "#101216" },
+              b = { fg = "#636e7b", bg = "#101216" },
+              c = { fg = "#636e7b", bg = "#101216" },
+            },
+          }
+        else
+          theme = {
+            normal = {
+              a = { fg = "#000000", bg = "#f4f4f4", gui = "bold" },
+              b = { fg = "#000000", bg = "#f4f4f4" },
+              c = { fg = "#000000", bg = "#f4f4f4" },
+            },
+            inactive = {
+              a = { fg = "#999999", bg = "#f4f4f4" },
+              b = { fg = "#999999", bg = "#f4f4f4" },
+              c = { fg = "#999999", bg = "#f4f4f4" },
+            },
+          }
+        end
 
-      -- Automatically update the theme when required
-      vim.api.nvim_create_autocmd("OptionSet", {
-        pattern = "background",
-        callback = set_theme,
+        require("lualine").setup({ options = { theme = theme } })
+      end
+
+      require("dark_notify").run({
+        onchange = function(mode)
+          set_theme(mode)
+          set_lualine_theme(mode)
+        end,
       })
     end,
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      -- Let LazyVim use the same dynamic colorscheme
-      colorscheme = function()
-        return vim.opt.background == "dark" and "github_dark_colorblind"
-          or "github_light_colorblind"
-      end,
-    },
   },
 }
