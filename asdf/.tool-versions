@@ -3,6 +3,6 @@ nodejs 23.6.0
 python 3.13.1t
 rust 1.84.0
 terraform 1.10.4
-terragrunt 0.72.0
+terragrunt 0.72.1
 kubelogin 0.1.6
 java openjdk-23.0.1
