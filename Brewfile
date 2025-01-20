@@ -46,6 +46,7 @@ brew "dark-notify"
 
 # -- Languages
 brew "asdf"
+cask "openkey", greedy: true
 
 # -- Other Apps
 cask "karabiner-elements", greedy: true
