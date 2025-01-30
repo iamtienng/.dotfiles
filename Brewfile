@@ -43,6 +43,7 @@ brew "pinentry-touchid"
 brew "telnet"
 tap "cormacrelf/tap"
 brew "dark-notify"
+cask "lm-studio", greedy: true
 
 # -- Languages
 brew "asdf"
