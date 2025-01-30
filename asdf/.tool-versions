@@ -1,9 +1,9 @@
 golang 1.23.5
 nodejs 23.6.1
 python 3.13.1t
-rust 1.84.0
+rust 1.84.1
 terraform 1.10.5
 terragrunt 0.72.5
-kubelogin 0.1.6
+kubelogin 0.1.7
 java openjdk-23.0.1
 cosign 2.4.1
