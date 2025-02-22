@@ -92,11 +92,27 @@ zstyle ':completion:*' menu select
 
 # aliases
 asdfup() {
-  asdf plugin-update --all
-  for plugin in $(asdf plugin list); do
+  export HOME="$HOME"  # Ensure HOME is set to avoid "unbound variable" errors
+
+  asdf plugin update --all
+
+  asdf plugin list | while read -r plugin; do
     latest=$(asdf latest "$plugin")
-    asdf install "$plugin" "$latest"
-    asdf global "$plugin" "$latest"
+
+    if [[ -n "$latest" ]]; then
+      # Check if the latest version is already installed
+      if ! asdf list "$plugin" | grep -q "$latest"; then
+        echo "Installing $plugin version $latest..."
+        asdf install "$plugin" "$latest"
+      else
+        echo "$plugin version $latest is already installed, skipping..."
+      fi
+
+      # Set the global version if the installation was successful
+      if asdf list "$plugin" | grep -q "$latest"; then
+        asdf global "$plugin" "$latest"
+      fi
+    fi
   done
 }
 alias asdfup="asdfup"
