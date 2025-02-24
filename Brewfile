@@ -47,6 +47,7 @@ cask "lm-studio", greedy: true
 
 # -- Languages
 brew "asdf"
+brew "node"
 cask "openkey", greedy: true
 
 # -- Other Apps

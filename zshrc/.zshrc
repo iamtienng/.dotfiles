@@ -110,7 +110,7 @@ asdfup() {
 
       # Set the global version if the installation was successful
       if asdf list "$plugin" | grep -q "$latest"; then
-        asdf global "$plugin" "$latest"
+        asdf set "$plugin" "$latest"
       fi
     fi
   done
