@@ -18,7 +18,6 @@ plugins=(
   direnv
   dotenv
   kubectl
-  asdf
   #NOTE: these are custom plugins, remember to download it
   evalcache
 )
@@ -91,31 +90,6 @@ fi
 zstyle ':completion:*' menu select
 
 # aliases
-asdfup() {
-  export HOME="$HOME"  # Ensure HOME is set to avoid "unbound variable" errors
-
-  asdf plugin update --all
-
-  asdf plugin list | while read -r plugin; do
-    latest=$(asdf latest "$plugin")
-
-    if [[ -n "$latest" ]]; then
-      # Check if the latest version is already installed
-      if ! asdf list "$plugin" | grep -q "$latest"; then
-        echo "Installing $plugin version $latest..."
-        asdf install "$plugin" "$latest"
-      else
-        echo "$plugin version $latest is already installed, skipping..."
-      fi
-
-      # Set the global version if the installation was successful
-      if asdf list "$plugin" | grep -q "$latest"; then
-        asdf set "$plugin" "$latest"
-      fi
-    fi
-  done
-}
-alias asdfup="asdfup"
 if [ -f ~/.config/Brewfile ]; then
   alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
 else

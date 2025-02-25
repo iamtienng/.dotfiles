@@ -46,8 +46,15 @@ brew "dark-notify"
 cask "lm-studio", greedy: true
 
 # -- Languages
-brew "asdf"
 brew "node"
+brew "cosign"
+brew "openjdk"
+brew "Azure/kubelogin/kubelogin"
+brew "terragrunt"
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
+brew "rust"
+brew "go"
 cask "openkey", greedy: true
 
 # -- Other Apps
