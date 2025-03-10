@@ -5,6 +5,7 @@ return { -- https://www.lazyvim.org/plugins/editor
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
+    version = "3.30",
     opts = {
       filesystem = {
         filtered_items = {
