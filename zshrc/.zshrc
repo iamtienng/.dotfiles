@@ -118,6 +118,7 @@ alias kdebug='
   fi
 '
 
+export ci=local
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 export AWS_PROFILE=$AWS_PROFILE
 export ERSTE_AWS_ACCESS_KEY_ID=$ERSTE_AWS_ACCESS_KEY_ID

@@ -1,4 +1,4 @@
-theme = light:GitHub Light,dark:Github Dark
+theme = light:GitHub Light,dark:Github Dark Colorblind
 auto-update = off
 
 font-size = 17
