@@ -14,6 +14,7 @@ brew "k9s"
 brew "azure-cli"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
+brew "opentofu"
 
 # Scanner
 brew "trivy"
