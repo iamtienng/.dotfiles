@@ -61,10 +61,12 @@ cask "openkey", greedy: true
 cask "karabiner-elements", greedy: true
 cask "1password-cli", greedy: true
 cask "pgadmin4", greedy: true
+cask "nikitabobko/tap/aerospace", greedy: true
+# tap "FelixKratz/formulae"
+# brew "sketchybar"
 
 # -- Editor
 brew "tmux"
-cask "wezterm", greedy: true
 brew "neovim"
 cask "obsidian", greedy: true
 
