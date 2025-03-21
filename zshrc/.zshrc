@@ -114,7 +114,7 @@ alias kdebug='
     kubectl exec -it debug-shell -- bash
   else
     echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils -- bash
+    kubectl run debug-shell --rm -i --tty --image ghcr.io/iamtienng/ubuntu-utils:latest -- bash
   fi
 '
 
