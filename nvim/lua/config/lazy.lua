@@ -16,6 +16,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.clipboard = "unnamedplus"
+
 vim.cmd([[
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
