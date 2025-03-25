@@ -62,6 +62,7 @@ cask "karabiner-elements", greedy: true
 cask "1password-cli", greedy: true
 cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
+cask "logi-options+", greedy: true
 # tap "FelixKratz/formulae"
 # brew "sketchybar"
 
