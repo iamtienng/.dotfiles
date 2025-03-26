@@ -118,7 +118,7 @@ alias kdebug='
   fi
 '
 
-export ci=local
+export ci="local"
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 export COSIGN_PASSWORD=$COSIGN_PASSWORD
 
