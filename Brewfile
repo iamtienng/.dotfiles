@@ -5,7 +5,7 @@ brew "kubectx"
 brew "helm"
 brew "helmfile"
 tap "fluxcd/tap"
-brew "fluxcd/tap/flux@2.3"
+brew "fluxcd/tap/flux"
 
 # UI
 brew "k9s"

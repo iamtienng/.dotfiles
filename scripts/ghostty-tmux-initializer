@@ -1,6 +1,6 @@
 #!/bin/zsh -i
 
-SESSION_NAME="ghostty"
+SESSION_NAME="ghostty-tmux"
 
 # Check if the session already exists
 tmux has-session -t $SESSION_NAME 2>/dev/null
