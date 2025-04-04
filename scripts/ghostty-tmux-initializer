@@ -1,6 +1,6 @@
 #!/bin/zsh -i
 
-SESSION_NAME="~"
+SESSION_NAME="Tien Nguyen"
 
 # Check if the session already exists
 tmux has-session -t $SESSION_NAME 2>/dev/null
