@@ -114,12 +114,14 @@ alias kdebug='
     kubectl exec -it debug-shell -- bash
   else
     echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image ghcr.io/iamtienng/ubuntu-utils:latest -- bash
+    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:v0.1.40 -- bash
   fi
 '
 
 export ci="local"
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export COSIGN_PASSWORD=$COSIGN_PASSWORD
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
