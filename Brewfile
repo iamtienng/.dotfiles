@@ -16,7 +16,9 @@ brew "Azure/kubelogin/kubelogin"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
 brew "terragrunt"
-brew "opentofu"
+# brew "opentofu"
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
 
 # Scanner
 brew "trivy"
