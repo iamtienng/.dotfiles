@@ -25,6 +25,8 @@ return {
         "regex",
         "rust",
         "dockerfile",
+        "terraform",
+        "hcl",
         -- Web bros
         "html",
         "tsx",

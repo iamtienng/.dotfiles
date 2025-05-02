@@ -50,6 +50,7 @@ brew "node"
 brew "openjdk"
 brew "rust"
 brew "go"
+brew "terraform-ls"
 
 # -- Other Apps
 cask "openkey", greedy: true
