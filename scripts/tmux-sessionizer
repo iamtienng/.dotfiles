@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(find ~/iamtienng ~/threatfabric/devops/cicd ~/threatfabric/devops/core-team ~/threatfabric/devops/currence/gitops/ ~/threatfabric/devops/currence/infra/ ~/threatfabric/devops/general ~/threatfabric/devops/gitops_environment ~/threatfabric/devops/note ~/threatfabric/devops/temp ~/threatfabric/dev ~/threatfabric/devops/frs-internal ~/threatfabric/devops/erste-prd -mindepth 1 -maxdepth 1 -type d | fzf)
+	selected=$(find ~/iamtienng ~/threatfabric/devops/cicd ~/threatfabric/devops/databricks ~/threatfabric/devops/general ~/threatfabric/devops/gitops/ ~/threatfabric/devops/infra ~/threatfabric/devops/note ~/threatfabric/devops/temp ~/threatfabric/dev -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
