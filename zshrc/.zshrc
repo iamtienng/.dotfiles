@@ -124,6 +124,8 @@ export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export COSIGN_PASSWORD=$COSIGN_PASSWORD
 
+export OLLAMA_HOST=$OLLAMA_HOST
+
 # To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
 [[ ! -f ~/.config/zshrc/.p10k.zsh ]] || source ~/.config/zshrc/.p10k.zsh
 
