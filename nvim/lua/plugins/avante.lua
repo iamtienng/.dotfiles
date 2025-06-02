@@ -11,7 +11,7 @@ return {
     auto_suggestions_provider = "ollama",
     ollama = {
       endpoint = os.getenv("OLLAMA_HOST"),
-      model = "llama3.1:8b",
+      model = "gemma3:12b",
     },
     cursor_applying_provider = "ollama",
     behaviour = {
