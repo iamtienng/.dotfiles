@@ -9,9 +9,11 @@ return {
     mode = "agentic",
     provider = "ollama",
     auto_suggestions_provider = "ollama",
-    ollama = {
-      endpoint = os.getenv("OLLAMA_HOST"),
-      model = "gemma3:12b",
+    providers = {
+      ollama = {
+        endpoint = os.getenv("OLLAMA_HOST"),
+        model = "gemma3:12b",
+      },
     },
     cursor_applying_provider = "ollama",
     behaviour = {
