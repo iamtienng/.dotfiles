@@ -1,9 +1,6 @@
 return {
   {
     "projekt0n/github-nvim-theme",
-  },
-  {
-    "cormacrelf/dark-notify",
     config = function()
       local palettes = {
         all = {
@@ -93,13 +90,8 @@ return {
 
         require("lualine").setup({ options = { theme = theme } })
       end
-
-      require("dark_notify").run({
-        onchange = function(mode)
-          set_theme(mode)
-          set_lualine_theme(mode)
-        end,
-      })
+      set_theme("dark")
+      set_lualine_theme("dark")
     end,
   },
 }
