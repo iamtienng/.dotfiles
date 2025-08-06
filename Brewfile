@@ -53,9 +53,11 @@ cask "1password-cli", greedy: true
 
 # -- Editor
 brew "tmux"
+brew "xclip"
 brew "neovim"
 
 # -- Zsh plugins
+brew "zsh"
 brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
