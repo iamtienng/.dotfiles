@@ -29,7 +29,7 @@ zstyle ':omz:update' frequency 7
 # -- EVALCACHE
 export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
 
-eval "$($(which brew) shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source $ZSH/oh-my-zsh.sh
 
 # Enable Powerlevel10k instant prompt
