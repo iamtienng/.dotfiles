@@ -2,11 +2,13 @@ Install Brew
 Install oh-my-zsh
 Install evalcache
 Install powerlevel10k
+Install Tmux Plugin Manager
 Set OLLAMA_HOST in `~/.zshenv`
 
 ```sh
 sudo apt update
 sudo apt upgrade
+sudo apt install xclip
 ```
 
 ```sh
