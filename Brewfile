@@ -12,9 +12,7 @@ brew "k9s"
 
 # Cloud
 brew "azure-cli"
-brew "Azure/kubelogin/kubelogin"
 brew "awscli"
-cask "session-manager-plugin", greedy: true
 brew "terragrunt"
 # brew "opentofu"
 tap "hashicorp/tap"
@@ -40,9 +38,6 @@ brew "go-task"
 brew "btop"
 brew "nmap"
 brew "tcpdump"
-brew "telnet"
-tap "cormacrelf/tap"
-brew "dark-notify"
 brew "cosign"
 
 # -- Languages
@@ -54,17 +49,11 @@ brew "go"
 brew "terraform-ls"
 
 # -- Other Apps
-cask "openkey", greedy: true
-cask "karabiner-elements", greedy: true
 cask "1password-cli", greedy: true
-cask "pgadmin4", greedy: true
-cask "nikitabobko/tap/aerospace", greedy: true
-cask "logi-options+", greedy: true
 
 # -- Editor
 brew "tmux"
 brew "neovim"
-cask "obsidian", greedy: true
 
 # -- Zsh plugins
 brew "zsh-autosuggestions"
@@ -87,6 +76,4 @@ brew "kubeconform"
 # -- Fonts
 cask "font-hack-nerd-font", greedy: true
 cask "font-jetbrains-mono-nerd-font", greedy: true
-cask "font-sf-pro", greedy: true
-cask "sf-symbols", greedy: true
 cask "font-meslo-lg-nerd-font", greedy: true
