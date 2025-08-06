@@ -49,6 +49,7 @@ brew "cosign"
 brew "node"
 brew "openjdk"
 brew "rust"
+brew "rust-analyzer"
 brew "go"
 brew "terraform-ls"
 
