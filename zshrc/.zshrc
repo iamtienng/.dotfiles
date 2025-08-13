@@ -117,7 +117,7 @@ alias kdebug='
     kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:v0.1.40 -- bash
   fi
 '
-
+export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
 export ENV="local"
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
