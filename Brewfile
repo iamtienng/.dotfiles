@@ -12,7 +12,6 @@ brew "k9s"
 
 # Cloud
 brew "azure-cli"
-brew "Azure/kubelogin/kubelogin"
 brew "awscli"
 cask "session-manager-plugin", greedy: true
 brew "terragrunt"
@@ -55,10 +54,7 @@ brew "terraform-ls"
 
 # -- Other Apps
 cask "openkey", greedy: true
-cask "karabiner-elements", greedy: true
 cask "bitwarden", greedy: true
-brew "bitwarden-cli"
-cask "1password-cli", greedy: true
 cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
 cask "logi-options+", greedy: true
