@@ -7,7 +7,6 @@ export DIRENV_LOG_FORMAT=""
 
 plugins=(
   git
-  1password
   z
   brew
   direnv
