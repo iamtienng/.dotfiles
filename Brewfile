@@ -49,7 +49,6 @@ brew "go"
 brew "terraform-ls"
 
 # -- Other Apps
-cask "1password-cli", greedy: true
 brew "bitwarden-cli"
 
 # -- Editor
