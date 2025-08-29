@@ -120,6 +120,7 @@ alias kdebug='
 
 export ENV="local"
 export OLLAMA_HOST=$OLLAMA_HOST
+export SSH_AUTH_SOCK=~/snap/bitwarden/current/.bitwarden-ssh-agent.sock
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
 [[ ! -f ~/.config/zshrc/.p10k.zsh ]] || source ~/.config/zshrc/.p10k.zsh

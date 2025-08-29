@@ -52,6 +52,9 @@ brew "terraform-ls"
 cask "1password-cli", greedy: true
 brew "bitwarden-cli"
 
+# -- WSL
+brew "socat"
+
 # -- Editor
 brew "tmux"
 brew "xclip"
