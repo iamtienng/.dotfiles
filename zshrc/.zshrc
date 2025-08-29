@@ -7,7 +7,6 @@ export DIRENV_LOG_FORMAT=""
 
 plugins=(
   git
-  1password
   z
   brew
   direnv
@@ -117,7 +116,6 @@ alias kdebug='
     kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:v0.1.40 -- bash
   fi
 '
-
 export ENV="local"
 export OLLAMA_HOST=$OLLAMA_HOST
 export SSH_AUTH_SOCK=~/snap/bitwarden/current/.bitwarden-ssh-agent.sock
