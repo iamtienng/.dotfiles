@@ -127,3 +127,6 @@ export OLLAMA_HOST=$OLLAMA_HOST
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/tien/.lmstudio/bin"
+
+# Add rust bin
+export PATH="$PATH:/Users/tien/.cargo/bin"
