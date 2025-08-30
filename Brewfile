@@ -2,6 +2,7 @@
 # Kubernetes
 brew "kubernetes-cli"
 brew "kubectx"
+brew "kustomize"
 brew "helm"
 brew "helmfile"
 tap "fluxcd/tap"
