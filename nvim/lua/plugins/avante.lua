@@ -12,7 +12,7 @@ return {
     providers = {
       ollama = {
         endpoint = os.getenv("OLLAMA_HOST"),
-        model = "gemma3:12b",
+        model = "gpt-oss:20b",
       },
     },
     cursor_applying_provider = "ollama",
