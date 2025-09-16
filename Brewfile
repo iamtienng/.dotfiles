@@ -44,6 +44,7 @@ brew "telnet"
 tap "cormacrelf/tap"
 brew "dark-notify"
 brew "cosign"
+brew "tree"
 
 # -- Languages
 brew "node"
@@ -59,6 +60,8 @@ cask "bitwarden", greedy: true
 cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
 cask "logi-options+", greedy: true
+cask "unifi-identity-endpoint", greedy: true
+cask "ghostty", greedy: true
 
 # -- Editor
 brew "tmux"
