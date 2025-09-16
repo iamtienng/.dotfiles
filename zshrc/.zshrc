@@ -102,7 +102,7 @@ if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
     chmod +x ~/.config/scripts/tmux-sessionizer
 fi
 alias hc="history -c"
-alias hg="history | grep "
+alias hg="history | rg "
 alias expand_path='realpath'
 alias k='kubectl'
 alias kx=kubectx
@@ -113,7 +113,7 @@ alias kdebug='
     kubectl exec -it debug-shell -- bash
   else
     echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:v0.1.40 -- bash
+    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:latest -- bash
   fi
 '
 export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
