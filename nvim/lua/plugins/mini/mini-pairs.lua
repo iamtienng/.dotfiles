@@ -2,7 +2,7 @@ return {
   -- NOTE: Enabled by default, but keep opts here for customization
   -- https://www.lazyvim.org/plugins/coding#minipairs
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     enabled = true,
     opts = {
       modes = { insert = true, command = true, terminal = false },

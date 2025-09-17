@@ -1,7 +1,7 @@
 return {
   -- NOTE: Enabled with LazyVim, but keep opts here for customization
   -- https://www.lazyvim.org/extras/editor/mini-files
-  "echasnovski/mini.files",
+  "nvim-mini/mini.files",
   opts = {
     windows = {
       preview = true,

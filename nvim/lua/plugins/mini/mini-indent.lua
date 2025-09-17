@@ -5,7 +5,7 @@ return {
   -- NOTE: Enabled with LazyVim, but keep opts here for customization
   -- https://www.lazyvim.org/extras/ui/mini-indentscope
   {
-    "echasnovski/mini.indentscope",
+    "nvim-mini/mini.indentscope",
     event = "LazyFile",
     opts = {
       -- symbol = "▏",

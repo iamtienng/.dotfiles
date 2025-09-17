@@ -2,7 +2,7 @@ return {
   -- NOTE: Enabled by default, but keep opts here for customization
   -- https://www.lazyvim.org/plugins/ui#miniicons
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     lazy = true,
     opts = {
       file = {
