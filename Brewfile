@@ -66,6 +66,7 @@ cask "ghostty", greedy: true
 # -- Editor
 brew "tmux"
 brew "neovim"
+brew "tree-sitter-cli"
 cask "obsidian", greedy: true
 
 # -- Zsh plugins

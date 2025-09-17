@@ -90,9 +90,9 @@ zstyle ':completion:*' menu select
 
 # aliases
 if [ -f ~/.config/Brewfile ]; then
-  alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
+  alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile" 
 else
-  alias brewup="brew update && brew upgrade"
+  alias brewup="brew cleanup && brew update && brew upgrade"
 fi
 # Ensure the script is executable
 if [[ -f ~/.config/scripts/ghostty-tmux-initializer ]]; then
