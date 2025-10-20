@@ -62,6 +62,7 @@ cask "nikitabobko/tap/aerospace", greedy: true
 cask "logi-options+", greedy: true
 cask "unifi-identity-endpoint", greedy: true
 cask "ghostty", greedy: true
+cask "zed", greedy: true
 
 # -- Editor
 brew "tmux"
