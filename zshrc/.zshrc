@@ -90,9 +90,9 @@ zstyle ':completion:*' menu select
 
 # aliases
 if [ -f ~/.config/Brewfile ]; then
-  alias brewup="brew bundle --file=~/.config/Brewfile && brew update && brew upgrade" 
+  alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile" 
 else
-  alias brewup="brew update && brew upgrade"
+  alias brewup="brew cleanup && brew update && brew upgrade"
 fi
 # Ensure the script is executable
 if [[ -f ~/.config/scripts/ghostty-tmux-initializer ]]; then
@@ -102,7 +102,7 @@ if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
     chmod +x ~/.config/scripts/tmux-sessionizer
 fi
 alias hc="history -c"
-alias hg="history | grep "
+alias hg="history | rg "
 alias expand_path='realpath'
 alias k='kubectl'
 alias kx=kubectx
@@ -113,7 +113,7 @@ alias kdebug='
     kubectl exec -it debug-shell -- bash
   else
     echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:v0.1.40 -- bash
+    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:latest -- bash
   fi
 '
 export ENV="local"
