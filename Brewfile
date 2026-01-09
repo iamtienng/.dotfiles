@@ -14,7 +14,6 @@ brew "k9s"
 # Cloud
 brew "azure-cli"
 brew "awscli"
-cask "session-manager-plugin", greedy: true
 brew "terragrunt"
 # brew "opentofu"
 tap "hashicorp/tap"
@@ -59,8 +58,6 @@ cask "openkey", greedy: true
 cask "bitwarden", greedy: true
 cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
-cask "logi-options+", greedy: true
-cask "unifi-identity-endpoint", greedy: true
 cask "ghostty", greedy: true
 cask "zed", greedy: true
 
