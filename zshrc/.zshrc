@@ -113,7 +113,9 @@ alias kdebug='
     kubectl exec -it debug-shell -- bash
   else
     echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:latest -- bash
+    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:latest \
+      --overrides="{\"spec\":{\"tolerations\":[{\"operator\":\"Exists\"}]}}" \
+      -- bash
   fi
 '
 export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
