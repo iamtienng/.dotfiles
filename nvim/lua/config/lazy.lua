@@ -50,7 +50,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lsp.neoconf" },
     { import = "lazyvim.plugins.extras.lsp.none-ls" },
     -- Extras Formatting
-    { import = "lazyvim.plugins.extras.formatting" },
+    { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- import/override with your plugins
     { import = "plugins" },
     -- Custom language plugins
