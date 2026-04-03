@@ -7,6 +7,8 @@ brew "helm"
 brew "helmfile"
 tap "fluxcd/tap"
 brew "fluxcd/tap/flux"
+brew "cilium-cli"
+brew "istioctl"
 
 # UI
 brew "k9s"
@@ -18,9 +20,6 @@ brew "terragrunt"
 # brew "opentofu"
 tap "hashicorp/tap"
 brew "hashicorp/tap/terraform"
-
-# Scanner
-brew "trivy"
 
 # -- General
 brew "direnv"
