@@ -59,12 +59,14 @@ cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
 cask "ghostty", greedy: true
 cask "zed", greedy: true
+cask "homerow", greedy: true
 
 # -- Editor
 brew "tmux"
 brew "neovim"
 brew "tree-sitter-cli"
 cask "obsidian", greedy: true
+cask "freelens", greedy: true
 
 # -- Zsh plugins
 brew "zsh-autosuggestions"
