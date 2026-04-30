@@ -80,6 +80,7 @@ brew "ripgrep"
 brew "lazygit"
 brew "lazydocker"
 brew "kubeconform"
+brew "tree-sitter-cli"
 
 # -- Fonts
 cask "font-meslo-lg-nerd-font", greedy: true
