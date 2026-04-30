@@ -11,4 +11,18 @@ return { -- https://www.lazyvim.org/plugins/ui
       color = { fg = "#ff9e64" },
     }),
   },
+  {
+    "folke/zen-mode.nvim",
+    enabled = true,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        icons_enabled = true,
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+      },
+    },
+  },
 }

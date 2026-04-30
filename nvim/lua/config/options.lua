@@ -81,6 +81,9 @@ opt.showmode = false
 -- Preview substitutions live, as you type!
 opt.inccommand = "split"
 
+-- I like round windows
+opt.winborder = "rounded"
+
 -- LazyVim picker
-vim.g.lazyvim_picker = "telescope"
+vim.g.lazyvim_picker = "snacks"
 vim.g.lazyvim_blink_main = false

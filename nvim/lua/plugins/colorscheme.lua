@@ -7,7 +7,7 @@ return {
     config = function()
       local palettes = {
         all = {
-          bg1 = "#101216", -- Base background color for dark theme
+          bg1 = "#101216",
         },
       }
 
@@ -21,7 +21,7 @@ return {
 
       local light_palettes = {
         all = {
-          bg1 = "#f4f4f4", -- Base background color for light theme
+          bg1 = "#f4f4f4",
         },
       }
 
@@ -34,6 +34,12 @@ return {
       }
 
       local function set_theme(mode)
+        -- Force a clean slate before re-applying
+        vim.cmd("highlight clear")
+        if vim.fn.exists("syntax_on") then
+          vim.cmd("syntax reset")
+        end
+
         if mode == "dark" then
           vim.opt.background = "dark"
           require("github-theme").setup({

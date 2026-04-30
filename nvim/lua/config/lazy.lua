@@ -16,8 +16,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.opt.clipboard = "unnamedplus"
-
 vim.cmd([[
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
@@ -34,29 +32,34 @@ require("lazy").setup({
       -- These plugins are included with lazyvim.plugins.editor
     },
     -- import any extras modules here
+    { import = "lazyvim.plugins.extras.coding.luasnip" },
     { import = "lazyvim.plugins.extras.editor.leap" },
     { import = "lazyvim.plugins.extras.coding.blink" },
+    { import = "lazyvim.plugins.extras.editor.neo-tree" },
     -- Lang
-    { import = "lazyvim.plugins.extras.lang.ansible" },
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.go" },
     { import = "lazyvim.plugins.extras.lang.helm" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.terraform" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
+    { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.rust" },
     -- Extras LSP
     { import = "lazyvim.plugins.extras.lsp.neoconf" },
     { import = "lazyvim.plugins.extras.lsp.none-ls" },
+    -- Extra mini
+    --  GZA$"
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    --  Show hexcode color
+    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- Extras Formatting
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- import/override with your plugins
     { import = "plugins" },
     -- Custom language plugins
-    -- { import = "plugins.lang" },
-    -- Custom plugins
-    { import = "plugins.mini" },
+    { import = "plugins.lang" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -67,11 +70,18 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  install = {
+    missing = true,
+    colorscheme = { "github_dark_colorblind" },
+  },
   change_detection = {
     enabled = true,
     notify = false,
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = {
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
   performance = {
     rtp = {
       -- disable some rtp plugins
