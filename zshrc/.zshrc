@@ -101,6 +101,8 @@ fi
 if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
     chmod +x ~/.config/scripts/tmux-sessionizer
 fi
+alias brewdown="brew uninstall --cask --force --zap"
+alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
 alias hc="history -c"
 alias hg="history | rg "
 alias expand_path='realpath'
@@ -117,6 +119,11 @@ alias kdebug='
       --overrides="{\"spec\":{\"tolerations\":[{\"operator\":\"Exists\"}]}}" \
       -- bash
   fi
+'
+alias tfclean='
+  find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+  find . -name ".terraform.lock.hcl" -type f -delete
+  find . -name "terragrunt-debug.tfvars.json" -type f -delete
 '
 export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
 export ENV="local"
