@@ -3,6 +3,4 @@
 !.gitignore
 !config.yaml
 !skins
-!catppuccin*
-!github-dark-colorblind*
-!dracula*
+!transparent*

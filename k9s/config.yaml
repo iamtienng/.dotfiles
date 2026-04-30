@@ -1,6 +1,6 @@
 k9s:
   ui:
-    skin: github-dark-colorblind
+    skin: transparent
     enableMouse: true
     headless: false
     logoless: false
