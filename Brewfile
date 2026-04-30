@@ -34,15 +34,11 @@ brew "curl"
 brew "wget"
 brew "git"
 brew "age"
-brew "go-task"
 brew "btop"
 brew "nmap"
 brew "tcpdump"
 brew "telnet"
-tap "cormacrelf/tap"
-brew "dark-notify"
 brew "cosign"
-brew "tree"
 
 # -- Languages
 brew "node"
@@ -53,20 +49,20 @@ brew "go"
 brew "terraform-ls"
 
 # -- Other Apps
-cask "openkey", greedy: true
-cask "bitwarden", greedy: true
-cask "pgadmin4", greedy: true
 cask "nikitabobko/tap/aerospace", greedy: true
+cask "bitwarden", greedy: true
 cask "ghostty", greedy: true
-cask "zed", greedy: true
 cask "homerow", greedy: true
+cask "openkey", greedy: true
+cask "pgadmin4", greedy: true
+cask "zed", greedy: true
 
 # -- Editor
+cask "obsidian", greedy: true
 brew "tmux"
 brew "neovim"
-brew "tree-sitter-cli"
-cask "obsidian", greedy: true
-cask "freelens", greedy: true
+tap "cormacrelf/tap"
+brew "dark-notify"
 
 # -- Zsh plugins
 brew "zsh-autosuggestions"
@@ -75,7 +71,6 @@ brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
 
 # -- Git
-# depend on Python
 brew "commitizen"
 brew "pre-commit"
 
@@ -87,8 +82,4 @@ brew "lazydocker"
 brew "kubeconform"
 
 # -- Fonts
-cask "font-hack-nerd-font", greedy: true
-cask "font-jetbrains-mono-nerd-font", greedy: true
-cask "font-sf-pro", greedy: true
-cask "sf-symbols", greedy: true
 cask "font-meslo-lg-nerd-font", greedy: true
