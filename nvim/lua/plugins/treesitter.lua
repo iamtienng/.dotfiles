@@ -1,8 +1,5 @@
 return {
   {
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    -- - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     -- - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     -- - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     "nvim-treesitter/nvim-treesitter",
@@ -16,7 +13,9 @@ return {
         "yaml",
         "lua",
         "query",
+        "sql",
         -- Editor
+        "comment",
         "markdown",
         "markdown_inline",
         -- Langs
@@ -28,19 +27,19 @@ return {
         "terraform",
         "hcl",
         -- Web bros
+        "gotmpl",
         "html",
         "tsx",
         "typescript",
         "javascript",
-        "typescript",
       },
+      ignore_install = { "tex", "latex" },
       -- Autoinstall languages that are not installed
       sync_install = false,
       auto_install = true,
       indent = {
         enable = true,
       },
-      ignore_install = { "tex", "latex" },
       highlight = {
         enable = true,
         use_languagetree = true,
@@ -49,6 +48,20 @@ return {
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
+      },
+    },
+  },
+  {
+    "folke/noice.nvim",
+    opts = {
+      cmdline = {
+        format = {
+          cmdline = { lang = "" },
+          search_down = { lang = "" },
+          search_up = { lang = "" },
+          filter = { lang = "" },
+          lua = { lang = "" },
+        },
       },
     },
   },
