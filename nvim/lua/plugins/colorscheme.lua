@@ -1,9 +1,9 @@
 return {
   {
     "projekt0n/github-nvim-theme",
-  },
-  {
-    "cormacrelf/dark-notify",
+    dependencies = {
+      "nvim-lualine/lualine.nvim",
+    },
     config = function()
       local palettes = {
         all = {
@@ -19,57 +19,25 @@ return {
         },
       }
 
-      local light_palettes = {
-        all = {
-          bg1 = "#f4f4f4",
-        },
-      }
-
-      local light_groups = {
-        all = {
-          Normal = { bg = "#f4f4f4", fg = "#000000" },
-          NormalFloat = { bg = "#f4f4f4" },
-          LineNr = { fg = "#999999" },
-        },
-      }
-
-      local function set_theme(mode)
-        -- Force a clean slate before re-applying
-        vim.cmd("highlight clear")
-        if vim.fn.exists("syntax_on") then
-          vim.cmd("syntax reset")
-        end
-
-        if mode == "dark" then
-          vim.opt.background = "dark"
-          require("github-theme").setup({
-            options = {
-              transparent = false,
-              hide_end_of_buffer = true,
-              terminal_colors = true,
-            },
-            palettes = palettes,
-            groups = groups,
-          })
-          vim.cmd("colorscheme github_dark_colorblind")
-        else
-          vim.opt.background = "light"
-          require("github-theme").setup({
-            options = {
-              transparent = false,
-              hide_end_of_buffer = true,
-              terminal_colors = true,
-            },
-            palettes = light_palettes,
-            groups = light_groups,
-          })
-          vim.cmd("colorscheme github_light_colorblind")
-        end
+      vim.cmd("highlight clear")
+      if vim.fn.exists("syntax_on") then
+        vim.cmd("syntax reset")
       end
 
-      local function set_lualine_theme(mode)
-        local theme
-        if mode == "dark" then
+      vim.opt.background = "dark"
+      require("github-theme").setup({
+        options = {
+          transparent = false,
+          hide_end_of_buffer = true,
+          terminal_colors = true,
+        },
+        palettes = palettes,
+        groups = groups,
+      })
+      vim.cmd("colorscheme github_dark_colorblind")
+
+      require("lualine").setup({
+        options = {
           theme = {
             normal = {
               a = { fg = "#ffffff", bg = "#101216", gui = "bold" },
@@ -81,30 +49,8 @@ return {
               b = { fg = "#636e7b", bg = "#101216" },
               c = { fg = "#636e7b", bg = "#101216" },
             },
-          }
-        else
-          theme = {
-            normal = {
-              a = { fg = "#000000", bg = "#f4f4f4", gui = "bold" },
-              b = { fg = "#000000", bg = "#f4f4f4" },
-              c = { fg = "#000000", bg = "#f4f4f4" },
-            },
-            inactive = {
-              a = { fg = "#999999", bg = "#f4f4f4" },
-              b = { fg = "#999999", bg = "#f4f4f4" },
-              c = { fg = "#999999", bg = "#f4f4f4" },
-            },
-          }
-        end
-
-        require("lualine").setup({ options = { theme = theme } })
-      end
-
-      require("dark_notify").run({
-        onchange = function(mode)
-          set_theme(mode)
-          set_lualine_theme(mode)
-        end,
+          },
+        },
       })
     end,
   },
