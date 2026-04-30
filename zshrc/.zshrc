@@ -31,7 +31,7 @@ path=(
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
 
 # Homebrew (must be early so brew paths resolve for plugins/completions)
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # ============================================================
 # OH-MY-ZSH

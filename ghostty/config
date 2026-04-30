@@ -1,7 +1,7 @@
-theme = light:GitHub Light,dark:Github Dark Colorblind
+theme = light:GitHub_Light,dark:GitHub_Dark_Colorblind
 auto-update = off
 
-font-size = 17
+font-size = 12
 window-inherit-font-size = true
 font-family = MesloLGS Nerd Font Mono
 
@@ -11,7 +11,6 @@ window-padding-balance = true
 window-padding-color = background
 window-padding-x = 0,0
 window-padding-y = 0,0
-macos-titlebar-style = hidden
 
 macos-option-as-alt = true
 

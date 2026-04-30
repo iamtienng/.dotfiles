@@ -37,7 +37,6 @@ brew "age"
 brew "btop"
 brew "nmap"
 brew "tcpdump"
-brew "telnet"
 brew "cosign"
 
 # -- Languages
@@ -49,20 +48,10 @@ brew "go"
 brew "terraform-ls"
 
 # -- Other Apps
-cask "nikitabobko/tap/aerospace", greedy: true
-cask "bitwarden", greedy: true
-cask "ghostty", greedy: true
-cask "homerow", greedy: true
-cask "openkey", greedy: true
-cask "pgadmin4", greedy: true
-cask "zed", greedy: true
 
 # -- Editor
-cask "obsidian", greedy: true
 brew "tmux"
 brew "neovim"
-tap "cormacrelf/tap"
-brew "dark-notify"
 
 # -- Zsh plugins
 brew "zsh-autosuggestions"
@@ -84,3 +73,16 @@ brew "tree-sitter-cli"
 
 # -- Fonts
 cask "font-meslo-lg-nerd-font", greedy: true
+
+# -- Only MacOS
+# brew "telnet"
+# cask "nikitabobko/tap/aerospace", greedy: true
+# cask "bitwarden", greedy: true
+# cask "ghostty", greedy: true
+# cask "homerow", greedy: true
+# cask "openkey", greedy: true
+# cask "pgadmin4", greedy: true
+# cask "zed", greedy: true
+# cask "obsidian", greedy: true
+# tap "cormacrelf/tap"
+# brew "dark-notify"
