@@ -1,9 +1,51 @@
-export ZSH="$HOME/.oh-my-zsh"
+# ============================================================
+# INSTANT PROMPT (must be near the very top)
+# ============================================================
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# p10k config
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ============================================================
+# ENVIRONMENT & PATH (before plugins)
+# ============================================================
 export LANG=en_US.UTF-8
 export DIRENV_LOG_FORMAT=""
+export EDITOR='nvim'
+export ENV="local"
+export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
+export COSIGN_PASSWORD=$COSIGN_PASSWORD
+export OLLAMA_HOST=$OLLAMA_HOST
+
+# XDG-style config paths
+export K9S_CONFIG_DIR=".config/k9s"
+export TMS_CONFIG_FILE="~/.config/tms/config.toml"
+export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
+
+# PATH additions
+path=(
+  "$HOME/.docker/bin"           # Docker Desktop (guarded below)
+  "$HOME/.cargo/bin"            # Rust
+  "$HOME/.lmstudio/bin"         # LM Studio
+  $path
+)
+[[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
+
+# Homebrew (must be early so brew paths resolve for plugins/completions)
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ============================================================
+# OH-MY-ZSH
+# ============================================================
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# zsh-syntax-highlighting config (before OMZ source)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
+ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
+
+DISABLE_MAGIC_FUNCTIONS="true"
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
 
 plugins=(
   git
@@ -12,105 +54,79 @@ plugins=(
   direnv
   dotenv
   kubectl
-  #NOTE: these are custom plugins, remember to download it
-  evalcache
+  evalcache   # custom: install separately
 )
 
-# zsh config
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
-ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
-DISABLE_MAGIC_FUNCTIONS="true"
-# Auto-update behavior
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
+source "$ZSH/oh-my-zsh.sh"
 
-# Other env_vars before load plugins
-# -- EVALCACHE
-export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
+# ============================================================
+# EDITOR (SSH-aware override)
+# ============================================================
+[[ -n $SSH_CONNECTION ]] && export EDITOR='vim'
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-source $ZSH/oh-my-zsh.sh
-
-# Enable Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# zsh plugins from Brew
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# editor
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
-# Set to vi mode
-# set -o vi
 
-# history
+# ============================================================
+# HISTORY
+# ============================================================
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
-setopt HIST_IGNORE_SPACE
-setopt HIST_IGNORE_DUPS
-setopt SHARE_HISTORY
+setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS SHARE_HISTORY
 
-# path
-# ASDF
-export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME=".config/asdf/.tool-versions"
-# K9s
-export K9S_CONFIG_DIR=".config/k9s"
-export TMS_CONFIG_FILE="~/.config/tms/config.toml"
-# Docker Desktop
-if [ -d "/Applications/Docker.app" ]; then
-  path+=("$HOME/.docker/bin")
-fi
-# kubectl
-if type kubectl &>/dev/null; then
-  # eval "$(kubectl completion zsh)"
-  _evalcache kubectl completion zsh
-fi
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-# Prom'pt & Completion 
+# ============================================================
+# COMPLETIONS & PROMPT
+# ============================================================
 if type brew &>/dev/null; then
-  fpath+=$(brew --prefix)/share/zsh-completions
-  fpath+=$(brew --prefix)/share/zsh/site-functions
-  autoload -Uz compinit promptinit
-  compinit -u
-  promptinit
+  fpath+=(
+    "$(brew --prefix)/share/zsh-completions"
+    "$(brew --prefix)/share/zsh/site-functions"
+  )
 fi
+autoload -Uz compinit promptinit
+compinit -u
+promptinit
 zstyle ':completion:*' menu select
 
-# aliases
-if [ -f ~/.config/Brewfile ]; then
-  alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile" 
+# ============================================================
+# BREW PLUGINS (after compinit)
+# ============================================================
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# ============================================================
+# LAZY / CACHED COMPLETIONS
+# ============================================================
+if type kubectl &>/dev/null; then
+  _evalcache kubectl completion zsh
+fi
+
+# ============================================================
+# ALIASES
+# ============================================================
+# Brew
+if [[ -f ~/.config/Brewfile ]]; then
+  alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile"
 else
   alias brewup="brew cleanup && brew update && brew upgrade"
 fi
-# Ensure the script is executable
-if [[ -f ~/.config/scripts/ghostty-tmux-initializer ]]; then
-    chmod +x ~/.config/scripts/ghostty-tmux-initializer
-fi
-if [[ -f ~/.config/scripts/tmux-sessionizer ]]; then
-    chmod +x ~/.config/scripts/tmux-sessionizer
-fi
 alias brewdown="brew uninstall --cask --force --zap"
-alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
+
+# Utils
 alias hc="history -c"
 alias hg="history | rg "
 alias expand_path='realpath'
+alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
+
+# Kubernetes
 alias k='kubectl'
-alias kx=kubectx
-alias kn=kubens
+alias kx='kubectx'
+alias kn='kubens'
 alias kdebug='
-  if kubectl get pod debug-shell &> /dev/null; then
+  if kubectl get pod debug-shell &>/dev/null; then
     echo "Connecting to existing debug-shell pod..."
     kubectl exec -it debug-shell -- bash
   else
@@ -120,22 +136,23 @@ alias kdebug='
       -- bash
   fi
 '
+
+# Terragrunt
 alias tfclean='
   find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
   find . -name ".terraform.lock.hcl" -type f -delete
   find . -name "terragrunt-debug.tfvars.json" -type f -delete
 '
-export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
-export ENV="local"
-export COSIGN_PASSWORD=$COSIGN_PASSWORD
 
-export OLLAMA_HOST=$OLLAMA_HOST
+# ============================================================
+# SCRIPT PERMISSIONS (idempotent, run once ideally via install)
+# ============================================================
+for script in ghostty-tmux-initializer tmux-sessionizer; do
+  [[ -f ~/.config/scripts/$script ]] && chmod +x ~/.config/scripts/$script
+done
 
-# To customize prompt, run `p10k configure` or edit ~/.config/zshrc/.p10k.zsh.
-[[ ! -f ~/.config/zshrc/.p10k.zsh ]] || source ~/.config/zshrc/.p10k.zsh
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/tien/.lmstudio/bin"
-
-# Add rust bin
-export PATH="$PATH:/Users/tien/.cargo/bin"
+# ============================================================
+# P10K (must be last)
+# ============================================================
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+[[ -f ~/.config/zshrc/.p10k.zsh ]] && source ~/.config/zshrc/.p10k.zsh
