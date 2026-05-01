@@ -81,8 +81,8 @@ setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS SHARE_HISTORY
 # ============================================================
 if type brew &>/dev/null; then
   fpath+=(
-    "$(brew --prefix)/share/zsh-completions"
-    "$(brew --prefix)/share/zsh/site-functions"
+    "usr/share/zsh/plugins/zsh-completions"
+    "/usr/share/zsh/plugins/zsh/site-functions"
   )
 fi
 autoload -Uz compinit promptinit
@@ -93,9 +93,9 @@ zstyle ':completion:*' menu select
 # ============================================================
 # BREW PLUGINS (after compinit)
 # ============================================================
-source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
 # ============================================================
 # LAZY / CACHED COMPLETIONS
@@ -107,7 +107,13 @@ fi
 # ============================================================
 # ALIASES
 # ============================================================
-# Brew
+# Package Manager
+if [[ -f ~/.config/pkglist.txt ]]; then
+  alias pacmanup="sudo pacman -S --needed - < ~/.config/pkglist.txt"
+fi
+if [[ -f ~/.config/pkglist-aur.txt ]]; then
+  alias yayup="yay -S --needed - < ~/.config/pkglist-aur.txt"
+fi
 if [[ -f ~/.config/Brewfile ]]; then
   alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile"
 else

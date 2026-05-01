@@ -1,0 +1,10 @@
+flux-bin
+azure-cli
+aws-cli-v2
+terragrunt
+terraform
+terraform-ls
+sops
+tcptraceroute
+lazydocker
+kubeconform
