@@ -30,9 +30,6 @@ path=(
 )
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
 
-# Homebrew (must be early so brew paths resolve for plugins/completions)
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # ============================================================
 # OH-MY-ZSH
 # ============================================================
@@ -50,7 +47,6 @@ zstyle ':omz:update' frequency 7
 plugins=(
   git
   z
-  brew
   direnv
   dotenv
   kubectl
@@ -79,19 +75,17 @@ setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS SHARE_HISTORY
 # ============================================================
 # COMPLETIONS & PROMPT
 # ============================================================
-if type brew &>/dev/null; then
-  fpath+=(
-    "usr/share/zsh/plugins/zsh-completions"
-    "/usr/share/zsh/plugins/zsh/site-functions"
-  )
-fi
+fpath+=(
+  "usr/share/zsh/plugins/zsh-completions"
+  "/usr/share/zsh/plugins/zsh/site-functions"
+)
 autoload -Uz compinit promptinit
 compinit -u
 promptinit
 zstyle ':completion:*' menu select
 
 # ============================================================
-# BREW PLUGINS (after compinit)
+# PLUGINS (after compinit)
 # ============================================================
 source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -114,12 +108,6 @@ fi
 if [[ -f ~/.config/pkglist-aur.txt ]]; then
   alias yayup="yay -S --needed - < ~/.config/pkglist-aur.txt"
 fi
-if [[ -f ~/.config/Brewfile ]]; then
-  alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile"
-else
-  alias brewup="brew cleanup && brew update && brew upgrade"
-fi
-alias brewdown="brew uninstall --cask --force --zap"
 
 # Utils
 alias hc="history -c"
