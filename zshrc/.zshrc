@@ -26,6 +26,7 @@ path=(
   "$HOME/.docker/bin"           # Docker Desktop (guarded below)
   "$HOME/.cargo/bin"            # Rust
   "$HOME/.lmstudio/bin"         # LM Studio
+  "$HOME/.local/bin"
   $path
 )
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
