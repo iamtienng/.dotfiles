@@ -25,6 +25,8 @@ rust-analyzer
 go
 tmux
 neovim
+vlc
+obsidian
 zsh
 zsh-autosuggestions
 zsh-completions
