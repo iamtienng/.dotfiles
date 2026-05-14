@@ -1,4 +1,6 @@
 ```sh
+pacman -S git
+pacman -S openssh
 pacman -S stow
 stow .
 # install zsh
