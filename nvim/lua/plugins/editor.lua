@@ -1,7 +1,5 @@
 return { -- https://www.lazyvim.org/plugins/editor
-  {
-    "mg979/vim-visual-multi",
-  },
+  { "mg979/vim-visual-multi", event = "BufReadPost" },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     -- will be disabled when mini-diffs is enabled
