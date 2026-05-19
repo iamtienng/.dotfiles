@@ -3,7 +3,7 @@ return {
     "projekt0n/github-nvim-theme",
   },
   {
-    "cormacrelf/dark-notify",
+    "vimpostor/vim-lumen",
     config = function()
       local palettes = {
         all = {
@@ -34,7 +34,6 @@ return {
       }
 
       local function set_theme(mode)
-        -- Force a clean slate before re-applying
         vim.cmd("highlight clear")
         if vim.fn.exists("syntax_on") then
           vim.cmd("syntax reset")
@@ -100,12 +99,20 @@ return {
         require("lualine").setup({ options = { theme = theme } })
       end
 
-      require("dark_notify").run({
-        onchange = function(mode)
+      -- vim-lumen fires the OptionSet autocommand when `background` changes
+      vim.api.nvim_create_autocmd("OptionSet", {
+        pattern = "background",
+        callback = function()
+          local mode = vim.v.option_new == "dark" and "dark" or "light"
           set_theme(mode)
           set_lualine_theme(mode)
         end,
       })
+
+      -- Apply on startup based on whatever vim-lumen detected
+      local mode = vim.o.background == "dark" and "dark" or "light"
+      set_theme(mode)
+      set_lualine_theme(mode)
     end,
   },
 }
