@@ -13,10 +13,6 @@ opt.number = true
 opt.relativenumber = true
 
 -- Tab & indentation
--- opt.tabstop = 2
--- opt.softtabstop = 2
--- opt.shiftwidth = 2
--- opt.expandtab = true
 opt.autoindent = true
 opt.smartindent = true -- if you code in C
 opt.breakindent = true
@@ -47,9 +43,6 @@ opt.cursorline = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 
--- -- Backspace behaviour
--- opt.backspace = "indent,eol,start"
-
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -65,7 +58,6 @@ opt.iskeyword:append("-")
 -- Other behaviours
 opt.swapfile = false -- Do not want *.swp files
 opt.backup = false -- Do not want backup
--- opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Undo directory
 opt.undofile = true -- Undo file
 
 -- Mouse mode, useful for resizing windows
@@ -86,4 +78,3 @@ opt.winborder = "rounded"
 
 -- LazyVim picker
 vim.g.lazyvim_picker = "snacks"
-vim.g.lazyvim_blink_main = false

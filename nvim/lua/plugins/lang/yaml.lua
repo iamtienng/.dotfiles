@@ -4,16 +4,14 @@ return {
     opts = {
       servers = {
         yamlls = {
-          enabled = true,
-          diagnosticsLimit = 50,
-          showDiagnosticsDirectly = false,
-          path = "yaml-language-server",
-          config = {
-            schemas = {
-              kubernetes = "globPattern",
+          settings = {
+            yaml = {
+              schemas = { kubernetes = "globPattern" },
+              completion = true,
+              hover = true,
             },
-            completion = true,
-            hover = true,
+            diagnosticsLimit = 50,
+            showDiagnosticsDirectly = false,
           },
         },
       },
