@@ -61,8 +61,6 @@ cask "zed", greedy: true
 cask "obsidian", greedy: true
 brew "tmux"
 brew "neovim"
-tap "cormacrelf/tap"
-brew "dark-notify"
 
 # -- Zsh plugins
 brew "zsh-autosuggestions"
