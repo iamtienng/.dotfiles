@@ -5,7 +5,6 @@ return {
     config = function()
       require("noice").setup({
         cmdline = { view = "cmdline" },
-        color = { fg = "#ff9e64" },
       })
     end,
   },
