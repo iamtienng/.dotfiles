@@ -23,10 +23,6 @@ return { -- https://www.lazyvim.org/plugins/editor
       },
     },
   },
-  { -- change trouble config
-    "folke/trouble.nvim",
-    opts = { use_diagnostic_signs = true },
-  },
   {
     "SmiteshP/nvim-navic",
     event = "LspAttach",
