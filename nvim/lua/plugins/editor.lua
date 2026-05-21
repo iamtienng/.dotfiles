@@ -27,6 +27,15 @@ return { -- https://www.lazyvim.org/plugins/editor
     "folke/trouble.nvim",
     opts = { use_diagnostic_signs = true },
   },
+  {
+    "SmiteshP/nvim-navic",
+    event = "LspAttach",
+    opts = {
+      highlight = false,
+      separator = "  ",
+      depth_limit = 5,
+    },
+  },
   { -- Highlight todo, notes, etc in comments
     "folke/todo-comments.nvim",
     event = "LazyFile",
