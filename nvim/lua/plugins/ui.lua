@@ -161,7 +161,22 @@ return {
         end,
       })
 
-      apply(vim.o.background == "dark" and "dark" or "light")
+      local function detect_mode()
+        -- inside tmux, trust the BACKGROUND env var set by tmux hooks
+        local bg_env = os.getenv("BACKGROUND")
+        if bg_env == "light" or bg_env == "dark" then
+          return bg_env
+        end
+        -- outside tmux, trust Neovim's DEC 2031 detection
+        return vim.o.background == "dark" and "dark" or "light"
+      end
+
+      vim.api.nvim_create_autocmd("VimEnter", {
+        once = true,
+        callback = function()
+          apply(detect_mode())
+        end,
+      })
     end,
   },
 }
