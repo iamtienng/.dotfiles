@@ -313,12 +313,20 @@ return {
       })
 
       local function detect_mode()
-        local bg_env = os.getenv("BACKGROUND")
+        -- Try tmux user option first
+        if vim.env.TMUX then
+          local handle = io.popen("tmux show -gqv @background 2>/dev/null")
 
-        if bg_env == "light" or bg_env == "dark" then
-          return bg_env
+          if handle then
+            local result = handle:read("*a"):gsub("%s+", "")
+            handle:close()
+
+            if result == "light" or result == "dark" then
+              return result
+            end
+          end
         end
-
+        -- Fallback to Neovim background
         return vim.o.background == "dark" and "dark" or "light"
       end
 
