@@ -32,6 +32,10 @@ return { -- https://www.lazyvim.org/plugins/editor
       depth_limit = 5,
     },
   },
+  { -- change trouble config
+    "folke/trouble.nvim",
+    opts = { use_diagnostic_signs = true },
+  },
   { -- Highlight todo, notes, etc in comments
     "folke/todo-comments.nvim",
     event = "LazyFile",
