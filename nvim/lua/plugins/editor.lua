@@ -1,11 +1,9 @@
-return { -- https://www.lazyvim.org/plugins/editor
+return {
+  { "mg979/vim-visual-multi", event = "BufReadPost" },
+
   {
-    "mg979/vim-visual-multi",
-  },
-  {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
-    -- will be disabled when mini-diffs is enabled
     "lewis6991/gitsigns.nvim",
+    event = "LazyFile",
     opts = {
       signs = {
         add = { text = "+" },
@@ -25,16 +23,48 @@ return { -- https://www.lazyvim.org/plugins/editor
       },
     },
   },
-  { -- change trouble config
+
+  {
+    "SmiteshP/nvim-navic",
+    event = "LspAttach",
+    opts = {
+      highlight = false,
+      separator = "  ",
+      depth_limit = 5,
+    },
+    config = function(_, opts)
+      local navic = require("nvim-navic")
+      navic.setup(opts)
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("user-navic-attach", { clear = true }),
+        desc = "Attach nvim-navic once per buffer",
+        callback = function(args)
+          if navic.is_available(args.buf) then
+            return
+          end
+
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client and client.server_capabilities.documentSymbolProvider then
+            navic.attach(client, args.buf)
+          end
+        end,
+      })
+    end,
+  },
+
+  {
     "folke/trouble.nvim",
     opts = { use_diagnostic_signs = true },
   },
-  { -- Highlight todo, notes, etc in comments
+
+  {
     "folke/todo-comments.nvim",
     event = "LazyFile",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = { signs = true },
   },
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
@@ -61,11 +91,7 @@ return { -- https://www.lazyvim.org/plugins/editor
         filtered_items = {
           hide_dotfiles = false,
           hide_gitignored = false,
-          never_show = {
-            ".git",
-            ".DS_Store",
-            "thumbs.db",
-          },
+          never_show = { ".git", ".DS_Store", "thumbs.db" },
         },
         follow_current_file = { enabled = true },
         group_empty_dirs = true,
