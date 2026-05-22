@@ -2,24 +2,12 @@ return {
   -- ── UI plugins ─────────────────────────────────────────────────────────────
   {
     "folke/noice.nvim",
-    config = function()
-      require("noice").setup({
-        cmdline = { view = "cmdline" },
-      })
-    end,
+    opts = {
+      cmdline = { view = "cmdline" },
+    },
   },
 
   { "folke/zen-mode.nvim", enabled = true },
-
-  {
-    "SmiteshP/nvim-navic",
-    event = "LspAttach",
-    opts = {
-      highlight = false,
-      separator = "  ",
-      depth_limit = 5,
-    },
-  },
 
   -- ── Colorscheme ────────────────────────────────────────────────────────────
   {
@@ -325,13 +313,7 @@ return {
       })
 
       local function detect_mode()
-        local bg_env = os.getenv("BACKGROUND")
-
-        if bg_env == "light" or bg_env == "dark" then
-          return bg_env
-        end
-
-        return vim.o.background == "dark" and "dark" or "light"
+        return os.getenv("BACKGROUND") or vim.o.background or "dark"
       end
 
       vim.api.nvim_create_autocmd("VimEnter", {
