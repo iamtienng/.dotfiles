@@ -44,7 +44,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.rust" },
     -- Extras LSP
     { import = "lazyvim.plugins.extras.lsp.neoconf" },
-    { import = "lazyvim.plugins.extras.lsp.none-ls" },
     -- Extra mini
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     --  Show hexcode color
