@@ -1,52 +1,15 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
--- Add any additional autocmds here
+-- Autocmds are automatically loaded on the VeryLazy event.
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking (copying) text",
-  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+local yank_group = augroup("user-highlight-yank", { clear = true })
+autocmd("TextYankPost", {
+  group = yank_group,
+  desc = "Highlight yanked text",
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank({ timeout = 120 })
   end,
 })
-
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-    require("go.format").goimports() -- goimports + gofmt
-  end,
-  group = format_sync_grp,
-})
-
--- Custom format for Templ
-local custom_format = function()
-  if vim.bo.filetype == "templ" then
-    local bufnr = vim.api.nvim_get_current_buf()
-    local filename = vim.api.nvim_buf_get_name(bufnr)
-    local cmd = "templ fmt " .. vim.fn.shellescape(filename)
-
-    vim.fn.jobstart(cmd, {
-      on_exit = function()
-        -- Reload the buffer only if it's still the current buffer
-        if vim.api.nvim_get_current_buf() == bufnr then
-          vim.cmd("e!")
-        end
-      end,
-    })
-  else
-    vim.lsp.buf.format()
-  end
-end
-
-vim.api.nvim_create_autocmd(
-  "BufWritePre",
-  { pattern = { "*.templ" }, callback = custom_format, group = format_sync_grp }
-)
 
 vim.filetype.add({
   extension = {
@@ -55,10 +18,43 @@ vim.filetype.add({
     jinja2 = "jinja",
     j2 = "jinja",
   },
-})
-
-vim.filetype.add({
   pattern = {
     ["%.gitlab%-ci%.ya?ml"] = "yaml.gitlab",
   },
+})
+
+local format_group = augroup("user-format-on-save", { clear = true })
+
+autocmd("BufWritePre", {
+  group = format_group,
+  pattern = "*.go",
+  desc = "Format Go files with goimports",
+  callback = function()
+    local ok, go_format = pcall(require, "go.format")
+    if ok then
+      go_format.goimports()
+    else
+      vim.lsp.buf.format({ async = false })
+    end
+  end,
+})
+
+autocmd("BufWritePre", {
+  group = format_group,
+  pattern = "*.templ",
+  desc = "Format templ files",
+  callback = function(args)
+    local file = vim.api.nvim_buf_get_name(args.buf)
+    if file == "" then
+      return
+    end
+
+    local result = vim.system({ "templ", "fmt", file }, { text = true }):wait()
+    if result.code ~= 0 then
+      vim.notify(result.stderr or "templ fmt failed", vim.log.levels.ERROR)
+      return
+    end
+
+    vim.cmd("checktime " .. args.buf)
+  end,
 })
