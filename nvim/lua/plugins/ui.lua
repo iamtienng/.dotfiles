@@ -313,7 +313,13 @@ return {
       })
 
       local function detect_mode()
-        return os.getenv("BACKGROUND") or vim.o.background or "dark"
+        local bg_env = os.getenv("BACKGROUND")
+
+        if bg_env == "light" or bg_env == "dark" then
+          return bg_env
+        end
+
+        return vim.o.background == "dark" and "dark" or "light"
       end
 
       vim.api.nvim_create_autocmd("VimEnter", {
