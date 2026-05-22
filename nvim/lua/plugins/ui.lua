@@ -312,22 +312,28 @@ return {
         end,
       })
 
+      local cached_mode
+
       local function detect_mode()
-        -- Try tmux user option first
+        if cached_mode then
+          return cached_mode
+        end
+
         if vim.env.TMUX then
-          local handle = io.popen("tmux show -gqv @background 2>/dev/null")
+          local result = vim
+            .system({ "tmux", "show", "-gqv", "@background" }, { text = true })
+            :wait()
 
-          if handle then
-            local result = handle:read("*a"):gsub("%s+", "")
-            handle:close()
+          local mode = vim.trim(result.stdout or "")
 
-            if result == "light" or result == "dark" then
-              return result
-            end
+          if mode == "light" or mode == "dark" then
+            cached_mode = mode
+            return mode
           end
         end
-        -- Fallback to Neovim background
-        return vim.o.background == "dark" and "dark" or "light"
+
+        cached_mode = vim.o.background == "light" and "light" or "dark"
+        return cached_mode
       end
 
       vim.api.nvim_create_autocmd("VimEnter", {
