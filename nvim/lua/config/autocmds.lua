@@ -13,28 +13,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-local ignored_clients = {
-  yamlls = true,
-}
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local ok_navic, navic = pcall(require, "nvim-navic")
-    if not ok_navic or navic.is_available(args.buf) then
-      return
-    end
-
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client or ignored_clients[client.name] then
-      return
-    end
-
-    if client.server_capabilities.documentSymbolProvider then
-      navic.attach(client, args.buf)
-    end
-  end,
-})
-
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {

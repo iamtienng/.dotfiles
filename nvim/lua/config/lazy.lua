@@ -38,10 +38,7 @@ require("lazy").setup({
     -- Lang
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.go" },
-    { import = "lazyvim.plugins.extras.lang.helm" },
     { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.lang.terraform" },
-    { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.rust" },
@@ -49,7 +46,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lsp.neoconf" },
     { import = "lazyvim.plugins.extras.lsp.none-ls" },
     -- Extra mini
-    --  GZA$"
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     --  Show hexcode color
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
