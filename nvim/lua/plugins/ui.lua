@@ -332,7 +332,7 @@ return {
           end
         end
 
-        cached_mode = vim.o.background == "light" and "light" or "dark"
+        cached_mode = vim.o.background == "dark" and "light" or "dark"
         return cached_mode
       end
 
