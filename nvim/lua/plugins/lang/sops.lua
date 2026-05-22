@@ -1,7 +1,7 @@
 return {
   {
     "lucidph3nx/nvim-sops",
-    event = { "BufEnter" },
+    event = { "BufReadPre", "BufNewFile" },
     keys = {
       { "<leader>see", vim.cmd.SopsEncrypt, desc = "[S]ops [E]ncrypt [F]ile" },
       { "<leader>sed", vim.cmd.SopsDecrypt, desc = "[S]ops [D]ecrypt [F]ile" },

@@ -1,80 +1,54 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
-
+-- Options are automatically loaded before lazy.nvim startup.
 vim.g.have_nerd_font = true
+vim.g.lazyvim_picker = "snacks"
 
--- Use `opt` for short
 local opt = vim.opt
 
-opt.cmdheight = 2
--- Line numbers
 opt.number = true
 opt.relativenumber = true
+opt.signcolumn = "yes"
+opt.cursorline = true
 
--- Tab & indentation
 opt.autoindent = true
-opt.smartindent = true -- if you code in C
+opt.smartindent = true
 opt.breakindent = true
 
--- Personal choice
-opt.scrolloff = 10 -- Minimum of rows
-opt.textwidth = 100 -- Text width
-opt.colorcolumn = "+1" -- Mark 1 column after textwidth
-opt.wrap = true -- Wrap line like for not to scroll, f**k connection string
-opt.linebreak = true -- Break line at word
+opt.scrolloff = 10
+opt.sidescrolloff = 8
+opt.textwidth = 100
+opt.colorcolumn = "+1"
+opt.wrap = true
+opt.linebreak = true
 
--- Sets how neovim will display certain whitespace in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 opt.list = true
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
--- Search setting
-opt.incsearch = true -- Search faster
-opt.ignorecase = true -- hello == Hello
-opt.smartcase = true -- Hello != hello
-opt.hlsearch = true -- Highlight; to clear highlight use keymaps
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = true
 
--- Cursor line
-opt.cursorline = true
-
--- -- Color setting
 opt.termguicolors = true
-opt.signcolumn = "yes"
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 opt.clipboard = "unnamedplus"
 
--- Split Windows
 opt.splitright = true
 opt.splitbelow = true
 
--- -- What is a word?
 opt.iskeyword:append("-")
 
--- Other behaviours
-opt.swapfile = false -- Do not want *.swp files
-opt.backup = false -- Do not want backup
-opt.undofile = true -- Undo file
+opt.swapfile = false
+opt.backup = false
+opt.writebackup = false
+opt.undofile = true
 
--- Mouse mode, useful for resizing windows
 opt.mouse = "a"
-
--- -- CPU goes brr 🔥
 opt.updatetime = 250
 opt.timeoutlen = 300
-
--- Don't show the mode, since it's already in the status line
 opt.showmode = false
-
--- Preview substitutions live, as you type!
 opt.inccommand = "split"
 
--- I like round windows
-opt.winborder = "rounded"
+if vim.fn.has("nvim-0.11") == 1 then
+  opt.winborder = "rounded"
+end
 
--- LazyVim picker
-vim.g.lazyvim_picker = "snacks"
+opt.cmdheight = 1
