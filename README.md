@@ -16,6 +16,14 @@ Run the installer from the repo root:
 ./install.sh
 ```
 
+For Omarchy, enter `Ctrl + Alt + F2`
+
+```
+chmod 000 ~/.config/hypr
+rm ~/.config/hypr/hyprland.conf
+sudo ./install.sh
+```
+
 The installer detects the OS, installs packages, installs the Zsh tooling used by `.zshrc`, then stows `common/` plus the matching OS directory into `~/.config`.
 
 Supported package paths:
