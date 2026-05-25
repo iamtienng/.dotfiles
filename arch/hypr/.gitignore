@@ -1,0 +1,14 @@
+**/*
+
+!.gitignore
+!autostart.conf
+!bindings.conf
+!envs.conf
+!hypridle.conf
+!hyprland.conf
+!hyprlock.conf
+!hyprsunset.conf
+!input.conf
+!looknfeel.conf
+!monitor.conf
+!xdph.conf
