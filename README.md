@@ -4,9 +4,9 @@ Personal dotfiles for macOS and Arch Linux, managed with GNU Stow.
 
 The repo is split into shared config and OS-specific config:
 
-- `common/`: shared app config for Neovim, tmux, Ghostty themes, k9s, and Zed.
-- `macos/`: macOS-only config and packages, including Homebrew, Aerospace, Karabiner, Ghostty, scripts, and zsh.
-- `arch/`: Arch-only config and packages, including Hyprland, Ghostty, scripts, and zsh.
+- `common/`: shared app config.
+- `macos/`: macOS-only config and packages.
+- `arch/`: Arch-only config and packages.
 
 ## Install
 
@@ -14,14 +14,6 @@ Run the installer from the repo root:
 
 ```sh
 ./install.sh
-```
-
-For Omarchy, enter `Ctrl + Alt + F2`
-
-```
-chmod 000 ~/.config/hypr
-rm ~/.config/hypr/hyprland.conf
-sudo ./install.sh
 ```
 
 The installer detects the OS, installs packages, installs the Zsh tooling used by `.zshrc`, then stows `common/` plus the matching OS directory into `~/.config`.
