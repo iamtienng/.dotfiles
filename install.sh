@@ -213,8 +213,6 @@ config_entries() {
       ! -name '.DS_Store' \
       ! -name '.gitignore' \
       ! -name 'README*.md' \
-      ! -name 'pkglist*.txt' \
-      ! -name 'Brewfile' \
       -print
   done | while IFS= read -r entry; do
     basename "$entry"
