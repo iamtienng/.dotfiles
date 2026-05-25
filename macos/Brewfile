@@ -1,4 +1,3 @@
-# -- DevOps tools
 # Kubernetes
 brew "kubernetes-cli"
 brew "kubectx"
@@ -22,6 +21,7 @@ tap "hashicorp/tap"
 brew "hashicorp/tap/terraform"
 
 # -- General
+brew "zsh"
 brew "direnv"
 brew "stow"
 brew "jq"
