@@ -13,7 +13,7 @@ brew "istioctl"
 brew "k9s"
 
 # Cloud
-brew "azure-cli"
+# brew "azure-cli"
 brew "awscli"
 brew "terragrunt"
 # brew "opentofu"
@@ -53,7 +53,7 @@ cask "nikitabobko/tap/aerospace", greedy: true
 cask "bitwarden", greedy: true
 cask "ghostty", greedy: true
 cask "homerow", greedy: true
-cask "openkey", greedy: true
+cask "gonhanh", greedy: true
 cask "pgadmin4", greedy: true
 cask "zed", greedy: true
 
