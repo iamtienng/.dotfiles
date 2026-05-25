@@ -66,4 +66,3 @@ Before stowing, the installer removes existing top-level config entries managed 
 The Zsh setup installs or updates Oh My Zsh, Powerlevel10k, and evalcache under `~/.oh-my-zsh`.
 
 The installer links `~/.zshrc` to `~/.config/zshrc/.zshrc` when `~/.zshrc` is missing or already a symlink. Existing regular `~/.zshrc` files are left untouched.
-test
