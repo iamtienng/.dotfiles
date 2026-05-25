@@ -117,6 +117,7 @@ fi
 alias brewdown="brew uninstall --cask --force --zap"
 
 # Utils
+alias btop='btop -c "${HOME}/.config/btop/btop_$(tmux show -gqv @background 2>/dev/null || echo dark).conf"'
 alias hc="history -c"
 alias hg="history | rg "
 alias expand_path='realpath'
