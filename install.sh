@@ -54,7 +54,9 @@ done
 
 detect_platform() {
   case "$(uname -s)" in
-  Darwin) printf 'macos' ;;
+  Darwin)
+    printf 'macos'
+    ;;
   Linux)
     if [ -f /etc/arch-release ]; then
       printf 'arch'
@@ -62,7 +64,9 @@ detect_platform() {
       die "unsupported Linux distribution; this repo currently has package lists for Arch only"
     fi
     ;;
-  *) die "unsupported OS: $(uname -s)" ;;
+  *)
+    die "unsupported OS: $(uname -s)"
+    ;;
   esac
 }
 
@@ -99,8 +103,13 @@ install_macos_packages() {
 
 read_package_list() {
   local file="$1"
+
   [ -f "$file" ] || return 0
-  sed -e 's/#.*//' -e '/^[[:space:]]*$/d' "$file"
+
+  sed \
+    -e 's/#.*//' \
+    -e '/^[[:space:]]*$/d' \
+    "$file"
 }
 
 install_arch_packages() {
@@ -193,29 +202,64 @@ config_entries() {
   for package_dir in "$@"; do
     [ -d "$package_dir" ] || continue
 
-    find "$package_dir" -mindepth 1 -maxdepth 1 \
+    find "$package_dir" \
+      -mindepth 1 \
+      -maxdepth 1 \
       ! -name '.stowrc' \
       ! -name '.DS_Store' \
       ! -name '.gitignore' \
       ! -name 'README*.md' \
       -print
-  done | while IFS= read -r entry; do
-    basename "$entry"
-  done | sort -u
+  done |
+    while IFS= read -r entry; do
+      basename "$entry"
+    done |
+    sort -u
 }
 
-is_stow_symlink() {
+path_points_to_dotfiles() {
+  local path="$1"
+
+  local resolved_path
+  resolved_path="$(realpath "$path" 2>/dev/null || true)"
+
+  local resolved_dotfiles
+  resolved_dotfiles="$(realpath "$DOTFILES_DIR" 2>/dev/null || true)"
+
+  [[ -n "$resolved_path" ]] || return 1
+  [[ -n "$resolved_dotfiles" ]] || return 1
+
+  case "$resolved_path" in
+  "$resolved_dotfiles"/*)
+    return 0
+    ;;
+  *)
+    return 1
+    ;;
+  esac
+}
+
+is_managed_by_stow() {
   local target="$1"
 
-  [ -L "$target" ] || return 1
+  [ -e "$target" ] || [ -L "$target" ] || return 1
 
-  local resolved
-  resolved="$(readlink "$target")"
+  # Case 1: the config itself is a symlink into this dotfiles repo.
+  if [ -L "$target" ] && path_points_to_dotfiles "$target"; then
+    return 0
+  fi
 
-  case "$resolved" in
-  "$DOTFILES_DIR"/* | ../* | ../../*) return 0 ;;
-  *) return 1 ;;
-  esac
+  # Case 2: the config is a real directory, but contains symlinks
+  # pointing into this dotfiles repo.
+  if [ -d "$target" ]; then
+    while IFS= read -r link; do
+      if path_points_to_dotfiles "$link"; then
+        return 0
+      fi
+    done < <(find "$target" -type l -print 2>/dev/null)
+  fi
+
+  return 1
 }
 
 prepare_config_entry() {
@@ -226,8 +270,8 @@ prepare_config_entry() {
     return
   fi
 
-  if is_stow_symlink "$target"; then
-    log "Existing stow symlink is okay: $target"
+  if is_managed_by_stow "$target"; then
+    log "Skipping already stowed config: $target"
     return
   fi
 
@@ -260,18 +304,27 @@ prepare_config_entries() {
 
 stow_package() {
   local package_dir="$1"
-  local stow_args=(--target "$STOW_TARGET" --restow .)
 
   [ -d "$package_dir" ] || die "missing package directory: $package_dir"
   command -v stow >/dev/null 2>&1 || die "GNU Stow is not installed"
 
+  mkdir -p "$CONFIG_HOME"
+
   if [ "$DRY_RUN" -eq 1 ]; then
-    stow_args=(--simulate --verbose "${stow_args[@]}")
+    log "Would stow $(basename "$package_dir") into $CONFIG_HOME"
+    (
+      cd "$package_dir" &&
+        stow --simulate --verbose --target "$STOW_TARGET" --restow .
+    )
+    return
   fi
 
   log "Stowing $(basename "$package_dir") into $CONFIG_HOME"
-  mkdir -p "$CONFIG_HOME"
-  (cd "$package_dir" && stow "${stow_args[@]}")
+
+  (
+    cd "$package_dir" &&
+      stow --target "$STOW_TARGET" --restow .
+  )
 }
 
 link_zshrc() {
@@ -283,16 +336,30 @@ link_zshrc() {
     return
   fi
 
-  if [ -L "$target" ] || [ ! -e "$target" ]; then
+  if [ -L "$target" ]; then
+    if path_points_to_dotfiles "$target"; then
+      log "Skipping already linked $target"
+      return
+    fi
+
+    log "Replacing existing symlink: $target"
     ln -sfn "$source" "$target"
-    log "Linked $target -> $source"
-  else
-    local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
-    log "Backing up existing $target -> $backup"
-    mv -- "$target" "$backup"
-    ln -sfn "$source" "$target"
-    log "Linked $target -> $source"
+    return
   fi
+
+  if [ ! -e "$target" ]; then
+    ln -sfn "$source" "$target"
+    log "Linked $target -> $source"
+    return
+  fi
+
+  local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
+
+  log "Backing up existing $target -> $backup"
+  mv -- "$target" "$backup"
+
+  ln -sfn "$source" "$target"
+  log "Linked $target -> $source"
 }
 
 stow_dotfiles() {
@@ -302,7 +369,9 @@ stow_dotfiles() {
 
   mkdir -p "$CONFIG_HOME"
 
-  prepare_config_entries "$DOTFILES_DIR/common" "$DOTFILES_DIR/$platform"
+  prepare_config_entries \
+    "$DOTFILES_DIR/common" \
+    "$DOTFILES_DIR/$platform"
 
   stow_package "$DOTFILES_DIR/common"
   stow_package "$DOTFILES_DIR/$platform"
@@ -312,6 +381,7 @@ stow_dotfiles() {
 
 main() {
   local platform
+
   platform="$(detect_platform)"
 
   log "Detected platform: $platform"

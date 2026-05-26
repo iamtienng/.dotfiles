@@ -46,6 +46,10 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
+  news = {
+    lazyvim = false,
+    neovim = false,
+  },
   install = {
     missing = true,
   },
