@@ -1,4 +1,9 @@
 ghostty
+socat
+dbus
+dconf
+glib2
+
 kubectl
 kubectx
 kustomize
