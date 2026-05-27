@@ -37,7 +37,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # zsh-syntax-highlighting config (before OMZ source)
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line)
 ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
 
 DISABLE_MAGIC_FUNCTIONS="true"
