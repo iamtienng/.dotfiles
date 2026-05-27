@@ -1,3 +1,4 @@
+ghostty
 kubectl
 kubectx
 kustomize
