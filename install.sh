@@ -52,16 +52,23 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
+is_wsl() {
+  grep -qiE '(microsoft|wsl)' /proc/sys/kernel/osrelease 2>/dev/null ||
+    grep -qiE '(microsoft|wsl)' /proc/version 2>/dev/null
+}
+
 detect_platform() {
   case "$(uname -s)" in
   Darwin)
     printf 'macos'
     ;;
   Linux)
-    if [ -f /etc/arch-release ]; then
+    if is_wsl; then
+      printf 'wsl'
+    elif [ -f /etc/arch-release ]; then
       printf 'arch'
     else
-      die "unsupported Linux distribution; this repo currently has package lists for Arch only"
+      die "unsupported Linux distribution; this repo currently supports Arch Linux and WSL"
     fi
     ;;
   *)
@@ -86,6 +93,7 @@ ensure_homebrew() {
   fi
 
   log "Homebrew not found; installing Homebrew"
+
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   if [ -x /opt/homebrew/bin/brew ]; then
@@ -97,7 +105,9 @@ ensure_homebrew() {
 
 install_macos_packages() {
   ensure_homebrew
+
   log "Installing macOS packages from macos/Brewfile"
+
   brew bundle --file="$DOTFILES_DIR/macos/Brewfile"
 }
 
@@ -112,20 +122,24 @@ read_package_list() {
     "$file"
 }
 
-install_arch_packages() {
+install_pacman_packages_from_dir() {
+  local platform_dir="$1"
+  local label="$2"
+
   local pacman_packages=()
   local aur_packages=()
 
   while IFS= read -r package; do
     pacman_packages+=("$package")
-  done < <(read_package_list "$DOTFILES_DIR/arch/pkglist.txt")
+  done < <(read_package_list "$DOTFILES_DIR/$platform_dir/pkglist.txt")
 
   while IFS= read -r package; do
     aur_packages+=("$package")
-  done < <(read_package_list "$DOTFILES_DIR/arch/pkglist-aur.txt")
+  done < <(read_package_list "$DOTFILES_DIR/$platform_dir/pkglist-aur.txt")
 
   if [ "${#pacman_packages[@]}" -gt 0 ]; then
-    log "Installing Arch packages from arch/pkglist.txt"
+    log "Installing $label packages from $platform_dir/pkglist.txt"
+
     sudo pacman -Syu --needed --noconfirm "${pacman_packages[@]}"
   fi
 
@@ -134,20 +148,35 @@ install_arch_packages() {
   fi
 
   if command -v yay >/dev/null 2>&1; then
-    log "Installing AUR packages from arch/pkglist-aur.txt with yay"
+    log "Installing $label AUR packages from $platform_dir/pkglist-aur.txt with yay"
+
     yay -S --needed --noconfirm "${aur_packages[@]}"
   elif command -v paru >/dev/null 2>&1; then
-    log "Installing AUR packages from arch/pkglist-aur.txt with paru"
+    log "Installing $label AUR packages from $platform_dir/pkglist-aur.txt with paru"
+
     paru -S --needed --noconfirm "${aur_packages[@]}"
   else
     log "No AUR helper found; skipping AUR packages: ${aur_packages[*]}"
   fi
 }
 
+install_arch_packages() {
+  install_pacman_packages_from_dir "arch" "Arch"
+}
+
+install_wsl_packages() {
+  log "Ensuring required bootstrap packages for WSL"
+
+  sudo pacman -Sy --needed --noconfirm git sudo
+
+  install_pacman_packages_from_dir "wsl" "WSL"
+}
+
 install_packages() {
   case "$1" in
   macos) install_macos_packages ;;
   arch) install_arch_packages ;;
+  wsl) install_wsl_packages ;;
   esac
 }
 
@@ -162,17 +191,22 @@ install_or_update_git_repo() {
 
   if [ -d "$target/.git" ]; then
     log "Updating $target"
+
     git -C "$target" pull --ff-only
+
     return
   fi
 
   if [ -e "$target" ]; then
     log "Leaving existing non-git path in place: $target"
+
     return
   fi
 
   log "Cloning $repo -> $target"
+
   mkdir -p "$(dirname -- "$target")"
+
   git clone --depth=1 "$repo" "$target"
 }
 
@@ -180,7 +214,8 @@ install_zsh_tools() {
   local oh_my_zsh_dir="$HOME/.oh-my-zsh"
   local zsh_custom_dir="$oh_my_zsh_dir/custom"
 
-  command -v git >/dev/null 2>&1 || die "git is required to install Oh My Zsh tools"
+  command -v git >/dev/null 2>&1 ||
+    die "git is required to install Oh My Zsh tools"
 
   install_or_update_git_repo \
     "https://github.com/ohmyzsh/ohmyzsh.git" \
@@ -244,13 +279,10 @@ is_managed_by_stow() {
 
   [ -e "$target" ] || [ -L "$target" ] || return 1
 
-  # Case 1: the config itself is a symlink into this dotfiles repo.
   if [ -L "$target" ] && path_points_to_dotfiles "$target"; then
     return 0
   fi
 
-  # Case 2: the config is a real directory, but contains symlinks
-  # pointing into this dotfiles repo.
   if [ -d "$target" ]; then
     while IFS= read -r link; do
       if path_points_to_dotfiles "$link"; then
@@ -272,6 +304,7 @@ prepare_config_entry() {
 
   if is_managed_by_stow "$target"; then
     log "Skipping already stowed config: $target"
+
     return
   fi
 
@@ -281,15 +314,19 @@ prepare_config_entry() {
     else
       log "Would backup existing config: $target"
     fi
+
     return
   fi
 
   if [ "$REPLACE_EXISTING" -eq 1 ]; then
     log "Removing existing config: $target"
+
     rm -rf -- "$target"
   else
     local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
+
     log "Backing up existing config: $target -> $backup"
+
     mv -- "$target" "$backup"
   fi
 }
@@ -305,17 +342,22 @@ prepare_config_entries() {
 stow_package() {
   local package_dir="$1"
 
-  [ -d "$package_dir" ] || die "missing package directory: $package_dir"
-  command -v stow >/dev/null 2>&1 || die "GNU Stow is not installed"
+  [ -d "$package_dir" ] ||
+    die "missing package directory: $package_dir"
+
+  command -v stow >/dev/null 2>&1 ||
+    die "GNU Stow is not installed"
 
   mkdir -p "$CONFIG_HOME"
 
   if [ "$DRY_RUN" -eq 1 ]; then
     log "Would stow $(basename "$package_dir") into $CONFIG_HOME"
+
     (
       cd "$package_dir" &&
         stow --simulate --verbose --target "$STOW_TARGET" --restow .
     )
+
     return
   fi
 
@@ -333,39 +375,48 @@ link_zshrc() {
 
   if [ "$DRY_RUN" -eq 1 ]; then
     log "Would link $target -> $source"
+
     return
   fi
 
   if [ -L "$target" ]; then
     if path_points_to_dotfiles "$target"; then
       log "Skipping already linked $target"
+
       return
     fi
 
     log "Replacing existing symlink: $target"
+
     ln -sfn "$source" "$target"
+
     return
   fi
 
   if [ ! -e "$target" ]; then
     ln -sfn "$source" "$target"
+
     log "Linked $target -> $source"
+
     return
   fi
 
   local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
 
   log "Backing up existing $target -> $backup"
+
   mv -- "$target" "$backup"
 
   ln -sfn "$source" "$target"
+
   log "Linked $target -> $source"
 }
 
 stow_dotfiles() {
   local platform="$1"
 
-  command -v stow >/dev/null 2>&1 || die "GNU Stow is not installed"
+  command -v stow >/dev/null 2>&1 ||
+    die "GNU Stow is not installed"
 
   mkdir -p "$CONFIG_HOME"
 
