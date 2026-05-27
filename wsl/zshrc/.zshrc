@@ -50,6 +50,19 @@ path=(
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+if grep -qi microsoft /proc/version; then
+  export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+
+  if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+    sudo mkdir -p "$XDG_RUNTIME_DIR"
+    sudo chown "$(id -u):$(id -g)" "$XDG_RUNTIME_DIR"
+    sudo chmod 700 "$XDG_RUNTIME_DIR"
+  fi
+
+  if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    eval "$(dbus-launch --sh-syntax)"
+  fi
+fi
 sync_windows_theme_to_gsettings() {
   local win_theme
 
