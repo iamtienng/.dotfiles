@@ -18,6 +18,7 @@ Run the installer from the repo root:
 
 For WSL
 ```
+choco install npiperelay
 wsl --install archlinux
 exit
 wsl --set-default archlinux
