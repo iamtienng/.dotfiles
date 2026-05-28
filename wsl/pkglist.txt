@@ -26,6 +26,9 @@ nmap
 tcpdump
 cosign
 jdk-openjdk
+nodejs
+npm
+unzip
 rust
 rust-analyzer
 go
@@ -45,7 +48,6 @@ lazygit
 tree-sitter
 tree-sitter-cli
 bitwarden
-bitwarden-cli
 fcitx5
 fcitx5-unikey
 fcitx5-configtool
