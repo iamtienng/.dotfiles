@@ -53,6 +53,7 @@ cask "nikitabobko/tap/aerospace", greedy: true
 cask "bitwarden", greedy: true
 cask "ghostty", greedy: true
 cask "homerow", greedy: true
+cask "scroll-reverser", greedy: true
 cask "gonhanh", greedy: true
 cask "pgadmin4", greedy: true
 cask "zed", greedy: true
