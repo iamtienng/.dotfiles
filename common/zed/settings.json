@@ -1,4 +1,5 @@
 {
+  "auto_update": false,
   "title_bar": {
     "show_branch_status_icon": false
   },

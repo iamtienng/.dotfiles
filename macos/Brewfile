@@ -55,10 +55,13 @@ cask "ghostty", greedy: true
 cask "homerow", greedy: true
 cask "scroll-reverser", greedy: true
 cask "gonhanh", greedy: true
-cask "pgadmin4", greedy: true
+# cask "pgadmin4", greedy: true
 cask "zed", greedy: true
 cask "karabiner-elements", greedy: true
 cask "wifiman", greedy: true
+cask "cloudflare-warp", greedy: true
+cask "1password", greedy: true
+cask "freelens", greedy: true
 
 # -- Editor
 cask "obsidian", greedy: true
