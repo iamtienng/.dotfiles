@@ -58,6 +58,7 @@ cask "gonhanh", greedy: true
 cask "pgadmin4", greedy: true
 cask "zed", greedy: true
 cask "karabiner-elements", greedy: true
+cask "wifiman", greedy: true
 
 # -- Editor
 cask "obsidian", greedy: true
