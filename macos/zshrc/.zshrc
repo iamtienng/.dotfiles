@@ -12,7 +12,7 @@ export LANG=en_US.UTF-8
 export DIRENV_LOG_FORMAT=""
 export EDITOR='nvim'
 export ENV="local"
-export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
+# export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
 export COSIGN_PASSWORD=$COSIGN_PASSWORD
 export OLLAMA_HOST=$OLLAMA_HOST
 
