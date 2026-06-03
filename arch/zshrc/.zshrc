@@ -102,12 +102,31 @@ fi
 # ALIASES
 # ============================================================
 # Package Manager
-if [[ -f ~/.config/pkglist.txt ]]; then
-  alias pacmanup="sudo pacman -S --needed - < ~/.config/pkglist.txt"
-fi
-if [[ -f ~/.config/pkglist-aur.txt ]]; then
-  alias yayup="yay -S --needed - < ~/.config/pkglist-aur.txt"
-fi
+# Official repo packages
+_pkglist() {
+  [[ -f "$1" ]] && grep -vE '^\s*#|^\s*$' "$1"
+}
+pacmanup() {
+  if [[ -f ~/.config/pkglist.txt ]]; then
+    sudo pacman -Syu --needed --noconfirm $(_pkglist ~/.config/pkglist.txt)
+  else
+    sudo pacman -Syu --noconfirm
+  fi
+}
+yayup() {
+  if [[ -f ~/.config/pkglist-aur.txt ]]; then
+    yay -Syu --needed --noconfirm $(_pkglist ~/.config/pkglist-aur.txt)
+  else
+    yay -Syu --noconfirm
+  fi
+}
+systemup() {
+  yay -Syu --noconfirm
+  [[ -f ~/.config/pkglist.txt ]] && \
+    sudo pacman -S --needed --noconfirm $(_pkglist ~/.config/pkglist.txt)
+  [[ -f ~/.config/pkglist-aur.txt ]] && \
+    yay -S --needed --noconfirm $(_pkglist ~/.config/pkglist-aur.txt)
+}
 
 # Utils
 alias btop='btop -c "${HOME}/.config/btop/btop_$(tmux show -gqv @background 2>/dev/null || echo dark).conf"'
