@@ -1,5 +1,6 @@
 **/.DS_Store
 **/.env
+**/.envrc
 **/packer_compiled.lua
 **/.tmp*
 
