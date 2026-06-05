@@ -4,6 +4,13 @@ dbus
 dconf
 glib2
 
+kubeconform
+aws-cli-v2
+terragrunt
+terraform
+sops
+lazydocker
+azure-cli
 kubectl
 kubectx
 kustomize
@@ -27,6 +34,9 @@ tcpdump
 cosign
 jdk-openjdk
 nodejs
+nvm
+pnpm
+corepack
 npm
 unzip
 rust
