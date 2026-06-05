@@ -30,6 +30,10 @@ path=(
 )
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
 
+# nvm PATH
+export NVM_DIR="$HOME/.nvm"
+source /usr/share/nvm/init-nvm.sh
+
 # ============================================================
 # OH-MY-ZSH
 # ============================================================

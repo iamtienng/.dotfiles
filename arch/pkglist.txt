@@ -29,6 +29,9 @@ tcpdump
 cosign
 jdk-openjdk
 nodejs
+nvm
+pnpm
+corepack
 npm
 unzip
 rust
