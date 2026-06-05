@@ -1,4 +1,11 @@
 ghostty
+kubeconform
+aws-cli-v2
+terragrunt
+terraform
+sops
+lazydocker
+azure-cli
 kubectl
 kubectx
 kustomize
