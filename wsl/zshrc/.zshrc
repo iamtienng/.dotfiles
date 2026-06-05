@@ -35,6 +35,10 @@ export K9S_CONFIG_DIR=".config/k9s"
 export TMS_CONFIG_FILE="~/.config/tms/config.toml"
 export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
 
+# nvm PATH
+export NVM_DIR="$HOME/.nvm"
+source /usr/share/nvm/init-nvm.sh
+
 # PATH additions
 path=(
   "$HOME/.docker/bin"           # Docker Desktop (guarded below)
