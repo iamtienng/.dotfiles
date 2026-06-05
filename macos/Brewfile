@@ -50,6 +50,7 @@ brew "terraform-ls"
 
 # -- Other Apps
 cask "nikitabobko/tap/aerospace", greedy: true
+cask "rectangle", greedy: true
 cask "bitwarden", greedy: true
 cask "ghostty", greedy: true
 cask "homerow", greedy: true
