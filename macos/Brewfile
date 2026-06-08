@@ -41,7 +41,7 @@ brew "telnet"
 brew "cosign"
 
 # -- Languages
-brew "node"
+brew "nvm"
 brew "openjdk"
 brew "rust"
 brew "rust-analyzer"

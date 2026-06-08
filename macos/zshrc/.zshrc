@@ -21,6 +21,12 @@ export K9S_CONFIG_DIR=".config/k9s"
 export TMS_CONFIG_FILE="~/.config/tms/config.toml"
 export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
 
+# nvm PATH
+export NVM_DIR="$HOME/.nvm"
+[[ -d "$HOME/.nvm" ]] || mkdir -p "$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 # PATH additions
 path=(
   "$HOME/.docker/bin"           # Docker Desktop (guarded below)
@@ -127,17 +133,25 @@ alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
 alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
-alias kdebug='
-  if kubectl get pod debug-shell &>/dev/null; then
-    echo "Connecting to existing debug-shell pod..."
-    kubectl exec -it debug-shell -- bash
+kdebug() {
+  local ns
+  ns=$(kubectl config view --minify -o jsonpath='{..namespace}')
+  ns=${ns:-default}
+
+  if kubectl get pod debug-shell -n "$ns" >/dev/null 2>&1; then
+    echo "Connecting to existing debug-shell pod in namespace: $ns"
+    kubectl exec -it -n "$ns" debug-shell -- bash
   else
-    echo "Creating a new debug-shell pod..."
-    kubectl run debug-shell --rm -i --tty --image iamtienng/ubuntu-utils:latest \
-      --overrides="{\"spec\":{\"tolerations\":[{\"operator\":\"Exists\"}]}}" \
+    echo "Creating a new debug-shell pod in namespace: $ns"
+    kubectl run debug-shell \
+      -n "$ns" \
+      --rm -it \
+      --restart=Never \
+      --image=iamtienng/ubuntu-utils:latest \
+      --overrides='{"spec":{"tolerations":[{"operator":"Exists"}]}}' \
       -- bash
   fi
-'
+}
 
 # Terragrunt
 alias tfclean='
