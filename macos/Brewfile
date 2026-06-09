@@ -47,6 +47,7 @@ brew "rust"
 brew "rust-analyzer"
 brew "go"
 brew "terraform-ls"
+brew "pytest"
 
 # -- Other Apps
 cask "nikitabobko/tap/aerospace", greedy: true
