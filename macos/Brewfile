@@ -39,6 +39,9 @@ brew "nmap"
 brew "tcpdump"
 brew "telnet"
 brew "cosign"
+brew "cmake"
+brew "gnupg"
+brew "pinentry-mac"
 
 # -- Languages
 brew "nvm"

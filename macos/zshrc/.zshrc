@@ -6,26 +6,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # ============================================================
-# ENVIRONMENT & PATH (before plugins)
+# PLATFORM ENV (macOS)
 # ============================================================
-export LANG=en_US.UTF-8
-export DIRENV_LOG_FORMAT=""
-export EDITOR='nvim'
-export ENV="local"
 # export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
-export COSIGN_PASSWORD=$COSIGN_PASSWORD
-export OLLAMA_HOST=$OLLAMA_HOST
+# COSIGN_PASSWORD / OLLAMA_HOST come from the environment / .env (dotenv plugin).
 
-# XDG-style config paths
-export K9S_CONFIG_DIR=".config/k9s"
-export TMS_CONFIG_FILE="~/.config/tms/config.toml"
-export ZSH_EVALCACHE_DIR="$HOME/.local/.zsh-evalcache"
-
-# nvm PATH
-export NVM_DIR="$HOME/.nvm"
-[[ -d "$HOME/.nvm" ]] || mkdir -p "$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# Homebrew (early, so brew paths resolve for completions/plugins).
+# This sets HOMEBREW_PREFIX, used below instead of repeated `brew --prefix` forks.
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # PATH additions
 path=(
@@ -37,23 +25,46 @@ path=(
 )
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
 
-# Homebrew (must be early so brew paths resolve for plugins/completions)
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# ------------------------------------------------------------
+# nvm — lazy-loaded.
+# The default node is added to PATH immediately so node/npm/npx (and the
+# p10k node segment) work with zero startup cost; the heavy nvm.sh is only
+# sourced the first time `nvm` itself is invoked.
+# ------------------------------------------------------------
+export NVM_DIR="$HOME/.nvm"
+[[ -d "$NVM_DIR" ]] || mkdir -p "$NVM_DIR"
+if [[ -s "$NVM_DIR/alias/default" ]]; then
+  _nvm_def="$(<"$NVM_DIR/alias/default")"
+  for _nvm_bin in \
+    "$NVM_DIR/versions/node/v${_nvm_def}"*/bin(/N) \
+    "$NVM_DIR/versions/node/${_nvm_def}"*/bin(/N); do
+    path=("$_nvm_bin" $path)
+    break
+  done
+  unset _nvm_def _nvm_bin
+fi
+nvm() {
+  unset -f nvm
+  [[ -s "/opt/homebrew/opt/nvm/nvm.sh" ]] && source "/opt/homebrew/opt/nvm/nvm.sh"
+  [[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]] &&
+    source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+  nvm "$@"
+}
 
-# ============================================================
-# OH-MY-ZSH
-# ============================================================
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ------------------------------------------------------------
+# Completions & line-editor plugin location (Homebrew)
+# ------------------------------------------------------------
+if type brew &>/dev/null; then
+  fpath+=(
+    "$HOMEBREW_PREFIX/share/zsh-completions"
+    "$HOMEBREW_PREFIX/share/zsh/site-functions"
+  )
+fi
+ZSH_PLUGIN_DIR="$HOMEBREW_PREFIX/share"
 
-# zsh-syntax-highlighting config (before OMZ source)
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line)
-ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
-
-DISABLE_MAGIC_FUNCTIONS="true"
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
-
+# ------------------------------------------------------------
+# Oh My Zsh plugins (macOS adds `brew`)
+# ------------------------------------------------------------
 plugins=(
   git
   z
@@ -61,63 +72,12 @@ plugins=(
   direnv
   dotenv
   kubectl
-  evalcache   # custom: install separately
+  evalcache   # custom: installed by install.sh
 )
 
-source "$ZSH/oh-my-zsh.sh"
-
-# ============================================================
-# EDITOR (SSH-aware override)
-# ============================================================
-[[ -n $SSH_CONNECTION ]] && export EDITOR='vim'
-
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
-
-# ============================================================
-# HISTORY
-# ============================================================
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
-setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS SHARE_HISTORY
-
-# ============================================================
-# COMPLETIONS & PROMPT
-# ============================================================
-if type brew &>/dev/null; then
-  fpath+=(
-    "$(brew --prefix)/share/zsh-completions"
-    "$(brew --prefix)/share/zsh/site-functions"
-  )
-fi
-autoload -Uz compinit promptinit
-compinit -u
-promptinit
-zstyle ':completion:*' menu select
-
-# ============================================================
-# BREW PLUGINS (after compinit)
-# ============================================================
-source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
-# the company
-source <(bk completion zsh)
-
-# ============================================================
-# LAZY / CACHED COMPLETIONS
-# ============================================================
-if type kubectl &>/dev/null; then
-  _evalcache kubectl completion zsh
-fi
-
-# ============================================================
-# ALIASES
-# ============================================================
-# Brew
+# ------------------------------------------------------------
+# Homebrew aliases
+# ------------------------------------------------------------
 if [[ -f ~/.config/Brewfile ]]; then
   alias brewup="brew cleanup && brew update && brew upgrade && brew bundle --file=~/.config/Brewfile"
 else
@@ -125,53 +85,12 @@ else
 fi
 alias brewdown="brew uninstall --cask --force --zap"
 
-# Utils
-alias btop='btop -c "${HOME}/.config/btop/btop_$(tmux show -gqv @background 2>/dev/null || echo dark).conf"'
-alias hc="history -c"
-alias hg="history | rg "
-alias expand_path='realpath'
-alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
-
-# Kubernetes
-alias k='kubectl'
-alias kx='kubectx'
-alias kn='kubens'
-kdebug() {
-  local ns
-  ns=$(kubectl config view --minify -o jsonpath='{..namespace}')
-  ns=${ns:-default}
-
-  if kubectl get pod debug-shell -n "$ns" >/dev/null 2>&1; then
-    echo "Connecting to existing debug-shell pod in namespace: $ns"
-    kubectl exec -it -n "$ns" debug-shell -- bash
-  else
-    echo "Creating a new debug-shell pod in namespace: $ns"
-    kubectl run debug-shell \
-      -n "$ns" \
-      --rm -it \
-      --restart=Never \
-      --image=iamtienng/ubuntu-utils:latest \
-      --overrides='{"spec":{"tolerations":[{"operator":"Exists"}]}}' \
-      -- bash
-  fi
-}
-
-# Terragrunt
-alias tfclean='
-  find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
-  find . -name ".terraform.lock.hcl" -type f -delete
-  find . -name "terragrunt-debug.tfvars.json" -type f -delete
-'
-
 # ============================================================
-# SCRIPT PERMISSIONS (idempotent, run once ideally via install)
+# SHARED CONFIG
 # ============================================================
-for script in ghostty-tmux-initializer tmux-sessionizer; do
-  [[ -f ~/.config/scripts/$script ]] && chmod +x ~/.config/scripts/$script
-done
+source ~/.config/zshrc/common.zsh
 
-# ============================================================
-# P10K (must be last)
-# ============================================================
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-[[ -f ~/.config/zshrc/.p10k.zsh ]] && source ~/.config/zshrc/.p10k.zsh
+# macOS completions that depend on compinit (cached via evalcache)
+if type bk &>/dev/null; then
+  _evalcache bk completion zsh
+fi

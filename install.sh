@@ -428,6 +428,23 @@ stow_dotfiles() {
   stow_package "$DOTFILES_DIR/$platform"
 
   link_zshrc
+  make_scripts_executable
+}
+
+make_scripts_executable() {
+  local scripts_dir="$CONFIG_HOME/scripts"
+
+  [ -d "$scripts_dir" ] || return 0
+
+  if [ "$DRY_RUN" -eq 1 ]; then
+    log "Would mark scripts executable under $scripts_dir"
+
+    return
+  fi
+
+  log "Marking scripts executable under $scripts_dir"
+
+  find -L "$scripts_dir" -maxdepth 1 -type f -exec chmod +x {} + 2>/dev/null || true
 }
 
 main() {

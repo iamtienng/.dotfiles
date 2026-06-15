@@ -108,6 +108,8 @@ Each stow package targets `~/.config` and uses `--no-folding` so shared and OS-s
 
 ## Notes
 
+Each OS `.zshrc` (`macos/`, `arch/`, `wsl/`) holds only platform-specific setup (Homebrew vs pacman, nvm location, OS plugins) and sources the shared body at `common/zshrc/common.zsh` for everything common (Oh My Zsh, history, aliases, completions, prompt). Edit shared behavior once in `common.zsh`; edit platform quirks in the matching OS file. `nvm` is lazy-loaded — `node`/`npm`/`npx` work immediately via the default version, and `nvm.sh` is sourced only on first `nvm` use.
+
 Before stowing, the installer removes existing top-level config entries managed by this repo, such as `~/.config/nvim`, `~/.config/ghostty`, and `~/.config/zshrc`. Then it recreates them from `common/` and the detected OS package.
 
 The Zsh setup installs or updates Oh My Zsh, Powerlevel10k, and evalcache under `~/.oh-my-zsh`.
