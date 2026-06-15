@@ -2,6 +2,20 @@ return {
   { "mg979/vim-visual-multi", event = "BufReadPost" },
 
   {
+    "folke/snacks.nvim",
+    opts = {
+      picker = {
+        sources = {
+          -- Include dotfiles (e.g. .gitlab-ci.yml, .github/) in results.
+          -- ripgrep skips hidden files by default; this re-enables them.
+          grep = { hidden = true },
+          files = { hidden = true },
+        },
+      },
+    },
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     event = "LazyFile",
     opts = {
