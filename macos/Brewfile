@@ -67,7 +67,6 @@ cask "zed", greedy: true
 cask "karabiner-elements", greedy: true
 cask "wifiman", greedy: true
 cask "cloudflare-warp", greedy: true
-cask "1password", greedy: true
 cask "freelens", greedy: true
 
 # -- Editor
