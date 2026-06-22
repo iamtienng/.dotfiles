@@ -4,6 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 STOW_TARGET="$CONFIG_HOME"
+CLAUDE_HOME="$HOME/.claude"
 
 DRY_RUN=0
 SKIP_PACKAGES=0
@@ -295,8 +296,9 @@ is_managed_by_stow() {
 }
 
 prepare_config_entry() {
-  local name="$1"
-  local target="$CONFIG_HOME/$name"
+  local target_dir="$1"
+  local name="$2"
+  local target="$target_dir/$name"
 
   if [ ! -e "$target" ] && [ ! -L "$target" ]; then
     return
@@ -332,15 +334,19 @@ prepare_config_entry() {
 }
 
 prepare_config_entries() {
+  local target_dir="$1"
+  shift
+
   local name
 
   while IFS= read -r name; do
-    prepare_config_entry "$name"
+    prepare_config_entry "$target_dir" "$name"
   done < <(config_entries "$@")
 }
 
 stow_package() {
   local package_dir="$1"
+  local target="${2:-$STOW_TARGET}"
 
   [ -d "$package_dir" ] ||
     die "missing package directory: $package_dir"
@@ -348,24 +354,24 @@ stow_package() {
   command -v stow >/dev/null 2>&1 ||
     die "GNU Stow is not installed"
 
-  mkdir -p "$CONFIG_HOME"
+  mkdir -p "$target"
 
   if [ "$DRY_RUN" -eq 1 ]; then
-    log "Would stow $(basename "$package_dir") into $CONFIG_HOME"
+    log "Would stow $(basename "$package_dir") into $target"
 
     (
       cd "$package_dir" &&
-        stow --simulate --verbose --target "$STOW_TARGET" --restow .
+        stow --simulate --verbose --target "$target" --restow .
     )
 
     return
   fi
 
-  log "Stowing $(basename "$package_dir") into $CONFIG_HOME"
+  log "Stowing $(basename "$package_dir") into $target"
 
   (
     cd "$package_dir" &&
-      stow --target "$STOW_TARGET" --restow .
+      stow --target "$target" --restow .
   )
 }
 
@@ -420,12 +426,17 @@ stow_dotfiles() {
 
   mkdir -p "$CONFIG_HOME"
 
-  prepare_config_entries \
+  prepare_config_entries "$CONFIG_HOME" \
     "$DOTFILES_DIR/common" \
     "$DOTFILES_DIR/$platform"
 
   stow_package "$DOTFILES_DIR/common"
   stow_package "$DOTFILES_DIR/$platform"
+
+  if [ -d "$DOTFILES_DIR/claude" ]; then
+    prepare_config_entries "$CLAUDE_HOME" "$DOTFILES_DIR/claude"
+    stow_package "$DOTFILES_DIR/claude" "$CLAUDE_HOME"
+  fi
 
   link_zshrc
   make_scripts_executable
