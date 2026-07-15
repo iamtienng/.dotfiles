@@ -4,9 +4,6 @@ brew "kubectx"
 brew "kustomize"
 brew "helm"
 brew "helmfile"
-tap "fluxcd/tap"
-brew "fluxcd/tap/flux"
-brew "cilium-cli"
 brew "istioctl"
 
 # UI
@@ -47,6 +44,7 @@ tap "jorgelbg/tap"
 brew "pinentry-touchid"
 
 # -- Languages
+brew "maven"
 brew "nvm"
 brew "rust"
 brew "rust-analyzer"
