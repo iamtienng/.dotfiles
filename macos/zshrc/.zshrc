@@ -21,7 +21,8 @@ path=(
   "$HOME/.cargo/bin"            # Rust
   "$HOME/.lmstudio/bin"         # LM Studio
   "$HOME/.local/bin"
-  "/opt/homebrew/opt/openjdk@11/bin"
+  "$HOME/project/work/core/main/bin"
+  "/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home/bin"
   $path
 )
 [[ -d "/Applications/Docker.app" ]] || path[1]=()  # drop Docker entry if not installed
