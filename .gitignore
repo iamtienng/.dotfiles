@@ -15,3 +15,6 @@ automatic_backups
 
 # Superpowers subagent-driven-development scratch (ledger, briefs, diffs)
 .superpowers/
+
+# Machine-local Claude Code settings (gateway URL, the token helper token helper, model pin) — never tracked
+claude/settings.json
