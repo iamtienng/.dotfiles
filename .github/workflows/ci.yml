@@ -15,3 +15,27 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Lint bash scripts
         run: shellcheck -S warning install.sh common/scripts/tmux-sessionizer claude/statusline-command.sh
+
+  dry-run:
+    name: Dry-run install (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: arch
+          - os: macos-latest
+            platform: macos
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GNU Stow (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y stow
+      - name: Install GNU Stow (macOS)
+        if: runner.os == 'macOS'
+        run: brew install stow
+      - name: Dry-run install
+        env:
+          DOTFILES_PLATFORM: ${{ matrix.platform }}
+        run: ./install.sh --dry-run --skip-packages --skip-zsh-tools
