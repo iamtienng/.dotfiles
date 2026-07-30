@@ -82,10 +82,11 @@ Supported package paths:
 Useful options:
 
 ```sh
-./install.sh --dry-run
-./install.sh --skip-packages
-./install.sh --skip-zsh-tools
-./install.sh --skip-stow
+./install.sh --dry-run           # preview every action; touches nothing
+./install.sh --skip-packages     # skip Homebrew/pacman package install
+./install.sh --skip-zsh-tools    # skip Oh My Zsh / Powerlevel10k / evalcache
+./install.sh --skip-stow         # skip linking
+./install.sh --replace-existing  # DANGEROUS: delete existing configs instead of backing them up
 ```
 
 ## Manual Stow
@@ -110,7 +111,7 @@ Each stow package targets `~/.config` and uses `--no-folding` so shared and OS-s
 
 Each OS `.zshrc` (`macos/`, `arch/`, `wsl/`) holds only platform-specific setup (Homebrew vs pacman, nvm location, OS plugins) and sources the shared body at `common/zshrc/common.zsh` for everything common (Oh My Zsh, history, aliases, completions, prompt). Edit shared behavior once in `common.zsh`; edit platform quirks in the matching OS file. `nvm` is lazy-loaded — `node`/`npm`/`npx` work immediately via the default version, and `nvm.sh` is sourced only on first `nvm` use.
 
-Before stowing, the installer removes existing top-level config entries managed by this repo, such as `~/.config/nvim`, `~/.config/ghostty`, and `~/.config/zshrc`. Then it recreates them from `common/` and the detected OS package.
+Before stowing, the installer inspects each top-level config entry it is about to create (for example `~/.config/nvim`, `~/.config/ghostty`, `~/.config/zshrc`). Entries already managed by this repo (symlinks pointing back into it) are left as-is. Any other pre-existing entry is **backed up** to `<name>.backup.<timestamp>` before stowing — nothing is deleted by default. Pass `--replace-existing` to delete those entries instead of backing them up (DANGEROUS). The same backup-first rule applies to `~/.zshrc`: a real file is backed up, and an existing symlink into this repo is left untouched.
 
 The Zsh setup installs or updates Oh My Zsh, Powerlevel10k, and evalcache under `~/.oh-my-zsh`.
 
