@@ -1,12 +1,14 @@
 # Dotfiles
 
-Personal dotfiles for macOS and Arch Linux, managed with GNU Stow.
+Personal dotfiles for macOS, Arch Linux, and WSL (Arch), managed with GNU Stow.
 
 The repo is split into shared config and OS-specific config:
 
-- `common/`: shared app config.
-- `macos/`: macOS-only config and packages.
-- `arch/`: Arch-only config and packages.
+- `common/`: shared app config (stowed to `~/.config`).
+- `macos/`: macOS-only config and packages (stowed to `~/.config`).
+- `arch/`: Arch-only config and packages (stowed to `~/.config`).
+- `wsl/`: WSL (Arch) config and packages (stowed to `~/.config`).
+- `claude/`: shared Claude Code config, stowed to `~/.claude` (not `~/.config`).
 
 ## Install
 
@@ -106,6 +108,16 @@ cd ../arch && stow --restow .
 ```
 
 Each stow package targets `~/.config` and uses `--no-folding` so shared and OS-specific directories can merge cleanly, for example `common/ghostty/themes` with `macos/ghostty/config`.
+
+## Claude Code config
+
+The `claude/` package is shared across all platforms and stows into `~/.claude`
+(Claude Code reads its config there, not from XDG). The installer stows it
+unconditionally, alongside `common/`. It ships `statusline-command.sh` (referenced
+by `~/.claude/settings.json`), plus `agents/`, `commands/`, and `skills/`.
+
+`~/.claude/settings.json` is intentionally **not** stowed — it holds
+environment-specific endpoints and tokens. Only files safe to share live in `claude/`.
 
 ## Notes
 
