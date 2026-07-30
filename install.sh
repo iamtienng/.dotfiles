@@ -337,7 +337,8 @@ prepare_config_entry() {
 
     rm -rf -- "$target"
   else
-    local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
+    local backup
+    backup="$target.backup.$(date +%Y%m%d%H%M%S)"
 
     log "Backing up existing config: $target -> $backup"
 
@@ -419,7 +420,8 @@ link_zshrc() {
     return
   fi
 
-  local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
+  local backup
+  backup="$target.backup.$(date +%Y%m%d%H%M%S)"
 
   log "Backing up existing $target -> $backup"
 
