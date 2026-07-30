@@ -59,6 +59,18 @@ is_wsl() {
 }
 
 detect_platform() {
+  if [ -n "${DOTFILES_PLATFORM:-}" ]; then
+    case "$DOTFILES_PLATFORM" in
+    macos | arch | wsl)
+      printf '%s' "$DOTFILES_PLATFORM"
+      return
+      ;;
+    *)
+      die "unsupported DOTFILES_PLATFORM: $DOTFILES_PLATFORM (expected macos, arch, or wsl)"
+      ;;
+    esac
+  fi
+
   case "$(uname -s)" in
   Darwin)
     printf 'macos'
