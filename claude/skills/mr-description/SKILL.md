@@ -18,7 +18,7 @@ Produce a merge request description for the current branch that the user can cop
    ```
    Read the full diff for anything non-obvious. Group changes logically; don't just restate the commit list.
 
-2. **Find the JIRA ticket.** Scan commit subjects and the branch name for a key like `CRON-1234` (pattern `[A-Z]+-\d+`). Link it: `https://<your-jira-host>/browse/CRON-1234`. If several appear, use the dominant one. If none, omit the link and note that.
+2. **Find the JIRA ticket.** Scan commit subjects and the branch name for a key like `PROJ-1234` (pattern `[A-Z]+-\d+`). Link it: `https://<your-jira-host>/browse/PROJ-1234`. If several appear, use the dominant one. If none, omit the link and note that.
 
 3. **Use the repo's MR template.** Look for `.gitlab/merge_request_templates/*.md` (prefer `default.md`). If present, fill it in exactly — keep its headings and order. For checklist pairs (Documentation / API / Testing), tick **exactly one box per pair** based on the actual diff:
    - API changed (endpoints, request/response, swagger annotations) → tick "changes the API" ; else tick "doesn't change the API".
@@ -26,7 +26,7 @@ Produce a merge request description for the current branch that the user can cop
    - dev workflow / README changed → tick accordingly.
    If there is no template, use: **Summary** (1 line), **What changed**, **Why**, **Testing**.
 
-4. **Write the Description body.** Lead with the ticket link + a one-line summary in the repo's tone (their commits use `CRON-XXXX:` and conventional prefixes like `chore(scope):`). Then the concrete changes grouped logically, and *why*. Keep it tight — a reviewer's briefing, not an essay. Put risk/rollout notes (e.g. "requires policy X deployed first") **inside** the block under a short heading, not as out-of-band commentary.
+4. **Write the Description body.** Lead with the ticket link + a one-line summary in the repo's tone (their commits use `PROJ-XXXX:` and conventional prefixes like `chore(scope):`). Then the concrete changes grouped logically, and *why*. Keep it tight — a reviewer's briefing, not an essay. Put risk/rollout notes (e.g. "requires policy X deployed first") **inside** the block under a short heading, not as out-of-band commentary.
 
 ## Output contract (this is what "ready to copy" means)
 

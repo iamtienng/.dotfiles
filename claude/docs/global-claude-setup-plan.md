@@ -28,7 +28,7 @@
 - Verify: symlink `~/.claude/settings.json`
 
 **Interfaces:**
-- Produces: a stowed `~/.claude/settings.json` symlink with all the company keys plus `outputStyle`, `alwaysThinkingEnabled`, `cleanupPeriodDays`, `attribution`.
+- Produces: a stowed `~/.claude/settings.json` symlink with all managed keys plus `outputStyle`, `alwaysThinkingEnabled`, `cleanupPeriodDays`, `attribution`.
 
 - [ ] **Step 1: Snapshot the current live settings for comparison**
 
@@ -37,19 +37,19 @@ Run:
 cp ~/.claude/settings.json /tmp/claude-settings.before.json
 cat /tmp/claude-settings.before.json
 ```
-Expected: prints the current JSON (the company keys). Keep this file to diff against.
+Expected: prints the current JSON (managed keys). Keep this file to diff against.
 
 - [ ] **Step 2: Create the tracked settings file with all keys**
 
 Create `~/project/personal/dev/.dotfiles/claude/settings.json` with exactly:
 ```json
 {
-  "apiKeyHelper": "the token helper:issue-token || (the token helper:login --skip-okta-auth > /dev/null 2>&1 && the token helper:issue-token)",
+  "apiKeyHelper": "<corporate-token-helper-command>",
   "env": {
     "ANTHROPIC_BASE_URL": "https://<corporate-llm-gateway>/anthropic/claude_code/",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "<gateway-model-id>",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "<gateway-model-id>",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "<gateway-model-id>",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "<gateway-sonnet-model-id>",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "<gateway-haiku-model-id>",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "<gateway-opus-model-id>",
     "ENABLE_TOOL_SEARCH": "false",
     "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"
   },
@@ -73,7 +73,7 @@ Create `~/project/personal/dev/.dotfiles/claude/settings.json` with exactly:
 }
 ```
 
-- [ ] **Step 3: Verify the tracked file is valid JSON and preserves the company keys**
+- [ ] **Step 3: Verify the tracked file is valid JSON and preserves managed keys**
 
 Run:
 ```bash
@@ -99,7 +99,7 @@ ls -l ~/.claude/settings.json
 ```
 Expected: `~/.claude/settings.json -> ../project/personal/dev/.dotfiles/claude/settings.json` (a symlink).
 
-- [ ] **Step 6: Confirm no drift vs. the pre-change the company keys**
+- [ ] **Step 6: Confirm no drift vs. the pre-change managed keys**
 
 Run:
 ```bash
@@ -325,4 +325,4 @@ Expected: one new commit; `macos/zshrc/.zshrc` remains unstaged.
 
 - [ ] **Open a fresh Claude session in any project and confirm:** Explanatory output style + thinking are active, and the global `CLAUDE.md` guidance is loaded (`/memory` shows the user file).
 - [ ] **Run `/ship --help`-style check:** typing `/ship` is recognized as a command.
-- [ ] **`claude` still authenticates** against the the company endpoint (apiKeyHelper unaffected).
+- [ ] **`claude` still authenticates** against the corporate endpoint (apiKeyHelper unaffected).

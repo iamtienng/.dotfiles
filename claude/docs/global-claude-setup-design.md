@@ -30,7 +30,7 @@ and linked into `~/.claude/` via **GNU Stow**, matching how `keybindings.json`,
 ## 3. Constraints (must respect)
 
 - **Corporate/managed environment.** Global `settings.json` sets `ANTHROPIC_BASE_URL`
-  (<corporate-llm-gateway>), an `apiKeyHelper`, per-tier model env vars,
+  (a corporate LLM gateway), an `apiKeyHelper`, per-tier model env vars,
   `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: "1"`, and `ENABLE_TOOL_SEARCH: "false"`.
   These keys are **preserved verbatim**. No beta-gated feature (agent teams, channels,
   ultraplan, auto mode, etc.) is introduced, because betas are disabled.
@@ -64,7 +64,7 @@ Explicitly **not** in CLAUDE.md: anything `settings.json` enforces deterministic
 (attribution, permissions, model) — per the repo tip to prefer settings for
 harness-enforced behavior.
 
-### 4.2 `settings.json` tuning  (edit existing global file; all the company keys preserved)
+### 4.2 `settings.json` tuning  (edit existing global file; all managed keys preserved)
 
 Add personal-default keys:
 
@@ -77,7 +77,7 @@ Add personal-default keys:
 **Tracking (LOCKED):** move the global `settings.json` into `dotfiles/claude/settings.json`
 and stow it so all tuning is version-controlled. It contains no secrets — the token comes
 from `apiKeyHelper` at runtime. Before stowing, the existing real `~/.claude/settings.json`
-must be relocated (not left in place) so Stow can create the symlink; all current the company
+must be relocated (not left in place) so Stow can create the symlink; all current managed
 keys are copied verbatim into the tracked file first.
 
 ### 4.3 Thin entry command(s)  (new → `dotfiles/claude/commands/`, stowed to `~/.claude/commands/`)
@@ -145,7 +145,7 @@ A dedicated bootstrap skill can come later if the checklist grows.
 - `/ship` is available globally and routes into Superpowers.
 - Global agent list contains only cross-project utilities; role-generalists retired.
 - Every change is version-controlled in the dotfiles repo and reproducible via Stow.
-- No the company/managed settings key is altered.
+- No corporate/managed settings key is altered.
 
 ## 8. Open sub-decisions carried into the plan
 
