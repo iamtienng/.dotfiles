@@ -49,9 +49,11 @@ git clone https://github.com/iamtienng/.dotfiles.git
 cd .dotfiles
 ./install.sh
 git remote set-url origin git@github.com:iamtienng/.dotfiles.git
-git config --global user.name "Tien Nguyen"
-git config --global user.email "iamtienng@gmail.com"
-git config --global user.signingkey "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIpJ9w+cEX0g3X5SvhbihI+R0LtG3KEkari4tyahPtN"
+# Git identity lives in an untracked local include (template: common/git/config.local.example):
+cp ~/.config/git/config.local.example ~/.config/git/config.local
+# then edit ~/.config/git/config.local with your name + email.
+# For work repos, add a gitdir-scoped includeIf pointing at an untracked
+# ~/.config/git/config.work that holds the work email + signing key (see the template).
 sudo pacman -S dbus socat
 sudo mkdir -p "/run/user/$(id -u)"
 sudo chown "$(id -u):$(id -g)" "/run/user/$(id -u)"
