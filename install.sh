@@ -35,6 +35,10 @@ die() {
   exit 1
 }
 
+warn() {
+  printf '[dotfiles] WARNING: %s\n' "$*" >&2
+}
+
 while [ "$#" -gt 0 ]; do
   case "$1" in
   --dry-run) DRY_RUN=1 ;;
@@ -324,7 +328,7 @@ prepare_config_entry() {
 
   if [ "$DRY_RUN" -eq 1 ]; then
     if [ "$REPLACE_EXISTING" -eq 1 ]; then
-      log "Would remove existing config: $target"
+      log "Would REMOVE (destructive) existing config: $target"
     else
       log "Would backup existing config: $target"
     fi
@@ -333,8 +337,17 @@ prepare_config_entry() {
   fi
 
   if [ "$REPLACE_EXISTING" -eq 1 ]; then
+    local _reply
+    warn "About to permanently delete: $target"
+    if [ -t 0 ]; then
+      printf '[dotfiles] Remove %s? [y/N] ' "$target" >&2
+      read -r _reply
+      case "$_reply" in
+      y | Y | yes | YES) ;;
+      *) die "aborted by user (existing config left untouched: $target)" ;;
+      esac
+    fi
     log "Removing existing config: $target"
-
     rm -rf -- "$target"
   else
     local backup
