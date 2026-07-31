@@ -11,6 +11,7 @@ SKIP_PACKAGES=0
 SKIP_ZSH_TOOLS=0
 SKIP_STOW=0
 REPLACE_EXISTING=0
+CHECK=0
 
 usage() {
   cat <<'USAGE'
@@ -22,6 +23,7 @@ Options:
   --skip-zsh-tools    Skip Oh My Zsh, Powerlevel10k, and evalcache setup.
   --skip-stow         Skip GNU Stow linking.
   --replace-existing  DANGEROUS: remove existing ~/.config entries instead of backing them up.
+  --check             Report config drift / broken symlinks (read-only); exit 1 if any found.
   -h, --help          Show this help.
 USAGE
 }
@@ -46,6 +48,7 @@ while [ "$#" -gt 0 ]; do
   --skip-zsh-tools) SKIP_ZSH_TOOLS=1 ;;
   --skip-stow) SKIP_STOW=1 ;;
   --replace-existing) REPLACE_EXISTING=1 ;;
+  --check) CHECK=1 ;;
   -h | --help)
     usage
     exit 0
@@ -485,12 +488,77 @@ make_scripts_executable() {
   find -L "$scripts_dir" -maxdepth 1 -type f -exec chmod +x {} + 2>/dev/null || true
 }
 
+_doctor_issue() {
+  warn "$*"
+  _DOCTOR_ISSUES=$((_DOCTOR_ISSUES + 1))
+}
+
+_doctor_check_entries() {
+  local home="$1"
+  shift
+
+  local name target
+  while IFS= read -r name; do
+    target="$home/$name"
+    if [ ! -e "$target" ] && [ ! -L "$target" ]; then
+      _doctor_issue "not linked (would be created): $target"
+    elif is_managed_by_stow "$target"; then
+      log "  ok: $target"
+    else
+      _doctor_issue "unmanaged (a real install would back this up): $target"
+    fi
+  done < <(config_entries "$@")
+}
+
+run_check() {
+  local platform="$1"
+  local dir link zt
+  _DOCTOR_ISSUES=0
+
+  log "doctor: read-only check of the existing installation"
+
+  log "doctor: [1/3] broken symlinks under $CONFIG_HOME and $CLAUDE_HOME"
+  for dir in "$CONFIG_HOME" "$CLAUDE_HOME"; do
+    [ -d "$dir" ] || continue
+    while IFS= read -r link; do
+      [ -e "$link" ] && continue
+      _doctor_issue "broken symlink: $link -> $(readlink "$link")"
+    done < <(find "$dir" -type l 2>/dev/null)
+  done
+
+  log "doctor: [2/3] entry health (drift + conflicts)"
+  _doctor_check_entries "$CONFIG_HOME" "$DOTFILES_DIR/common" "$DOTFILES_DIR/$platform"
+  [ -d "$DOTFILES_DIR/claude" ] && _doctor_check_entries "$CLAUDE_HOME" "$DOTFILES_DIR/claude"
+
+  log "doctor: [3/3] ~/.zshrc"
+  zt="$HOME/.zshrc"
+  if [ -L "$zt" ] && path_points_to_dotfiles "$zt"; then
+    log "  ok: $zt"
+  elif [ -e "$zt" ]; then
+    _doctor_issue "$HOME/.zshrc is a real file (a real install leaves it untouched): $zt"
+  else
+    _doctor_issue "$HOME/.zshrc not linked: $zt"
+  fi
+
+  if [ "$_DOCTOR_ISSUES" -eq 0 ]; then
+    log "doctor: all checks passed"
+    return 0
+  fi
+  warn "doctor: $_DOCTOR_ISSUES issue(s) found"
+  return 1
+}
+
 main() {
   local platform
 
   platform="$(detect_platform)"
 
   log "Detected platform: $platform"
+
+  if [ "$CHECK" -eq 1 ]; then
+    run_check "$platform" && return 0
+    return 1
+  fi
 
   if [ "$SKIP_PACKAGES" -eq 0 ]; then
     install_packages "$platform"
