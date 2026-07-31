@@ -4,6 +4,9 @@
 **/packer_compiled.lua
 **/.tmp*
 
+# Logs
+**/*.log
+
 # Zed database
 **/*.mdb
 
