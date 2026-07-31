@@ -2,6 +2,8 @@
 
 Personal dotfiles for macOS, Arch Linux, and WSL (Arch), managed with GNU Stow.
 
+> Architecture & conventions: see [CLAUDE.md](CLAUDE.md).
+
 The repo is split into shared config and OS-specific config:
 
 - `common/`: shared app config (stowed to `~/.config`).
