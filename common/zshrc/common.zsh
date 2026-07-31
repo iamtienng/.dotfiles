@@ -151,3 +151,8 @@ alias tfclean='
 # ------------------------------------------------------------
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 [[ -f ~/.config/zshrc/.p10k.zsh ]] && source ~/.config/zshrc/.p10k.zsh
+
+# ------------------------------------------------------------
+# Machine-local overrides (untracked; sourced last so it can override anything)
+# ------------------------------------------------------------
+[[ -f ~/.config/zshrc/local.zsh ]] && source ~/.config/zshrc/local.zsh
