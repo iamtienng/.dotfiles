@@ -112,4 +112,4 @@ backspace = ['close-all-windows-but-current', 'mode main']
 # APPS MODE
 # ============================================================
 [mode.apps.binding]
-alt-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
+alt-w = ['exec-and-forget open -a /Applications/Ghostty.app', 'mode main']
