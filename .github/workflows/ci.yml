@@ -32,9 +32,22 @@ jobs:
       - name: Install GNU Stow (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y stow
+      - name: Validate package lists parse
+        if: matrix.platform == 'arch'
+        run: |
+          for f in arch/pkglist.txt wsl/pkglist.txt; do
+            entries=$(grep -vE '^\s*#|^\s*$' "$f")
+            [ -n "$entries" ] || { echo "::error::$f has no packages"; exit 1; }
+            bad=$(printf '%s\n' "$entries" | grep -vE '^[A-Za-z0-9._+-]+$' || true)
+            [ -z "$bad" ] || { echo "::error::$f has malformed entries: $bad"; exit 1; }
+            echo "$f OK"
+          done
       - name: Install GNU Stow (macOS)
         if: runner.os == 'macOS'
         run: brew install stow
+      - name: Validate Brewfile parses
+        if: matrix.platform == 'macos'
+        run: brew bundle list --file=macos/Brewfile >/dev/null
       - name: Dry-run install
         env:
           DOTFILES_PLATFORM: ${{ matrix.platform }}
