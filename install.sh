@@ -23,7 +23,7 @@ Options:
   --skip-zsh-tools    Skip Oh My Zsh, Powerlevel10k, and evalcache setup.
   --skip-stow         Skip GNU Stow linking.
   --replace-existing  DANGEROUS: remove existing ~/.config entries instead of backing them up.
-  --check             Report config drift / broken symlinks (read-only); exit 1 if any found.
+  --check             Report config drift / broken symlinks (read-only, standalone); exit 1 if any found.
   -h, --help          Show this help.
 USAGE
 }
@@ -535,9 +535,9 @@ run_check() {
   if [ -L "$zt" ] && path_points_to_dotfiles "$zt"; then
     log "  ok: $zt"
   elif [ -e "$zt" ]; then
-    _doctor_issue "$HOME/.zshrc is a real file (a real install leaves it untouched): $zt"
+    _doctor_issue "$zt is a real file (a real install leaves it untouched)"
   else
-    _doctor_issue "$HOME/.zshrc not linked: $zt"
+    _doctor_issue "$zt not linked"
   fi
 
   if [ "$_DOCTOR_ISSUES" -eq 0 ]; then
