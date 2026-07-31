@@ -91,6 +91,13 @@ alias hg="history | rg "
 alias expand_path='realpath'
 alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
 
+# eza / lazygit / lazydocker (additive — ls/cat/find left unchanged)
+alias ll='eza -l --git --icons'
+alias la='eza -la --git --icons'
+alias lt='eza --tree --level=2'
+alias lg='lazygit'
+alias lzd='lazydocker'
+
 # ------------------------------------------------------------
 # Aliases — Kubernetes
 # ------------------------------------------------------------

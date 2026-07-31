@@ -81,10 +81,14 @@ brew "zsh-syntax-highlighting"
 # -- Git
 brew "commitizen"
 brew "pre-commit"
+brew "git-delta"
 
 # -- Neovim tools
 brew "fzf"
 brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "eza"
 brew "lazygit"
 brew "lazydocker"
 brew "kubeconform"
