@@ -54,6 +54,10 @@ zsh-syntax-highlighting
 pre-commit
 fzf
 ripgrep
+fd
+bat
+eza
+git-delta
 lazygit
 tree-sitter
 tree-sitter-cli

@@ -76,6 +76,19 @@ if [[ -n "$ZSH_PLUGIN_DIR" ]]; then
 fi
 
 # ------------------------------------------------------------
+# fzf — fuzzy finder shell integration (Ctrl-R / Ctrl-T / Alt-C)
+# fd/bat power the file source and preview; guarded so a missing
+# fzf (or an older one without --zsh) never breaks shell startup.
+# ------------------------------------------------------------
+if command -v fzf >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :200 {}'"
+  export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
+  source <(fzf --zsh 2>/dev/null)
+fi
+
+# ------------------------------------------------------------
 # Cached completions
 # ------------------------------------------------------------
 if type kubectl &>/dev/null; then
@@ -90,6 +103,13 @@ alias hc="history -c"
 alias hg="history | rg "
 alias expand_path='realpath'
 alias nvimclean="rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim"
+
+# eza / lazygit / lazydocker (additive — ls/cat/find left unchanged)
+alias ll='eza -l --git --icons'
+alias la='eza -la --git --icons'
+alias lt='eza --tree --level=2'
+alias lg='lazygit'
+alias lzd='lazydocker'
 
 # ------------------------------------------------------------
 # Aliases — Kubernetes
@@ -131,3 +151,8 @@ alias tfclean='
 # ------------------------------------------------------------
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 [[ -f ~/.config/zshrc/.p10k.zsh ]] && source ~/.config/zshrc/.p10k.zsh
+
+# ------------------------------------------------------------
+# Machine-local overrides (untracked; sourced last so it can override anything)
+# ------------------------------------------------------------
+[[ -f ~/.config/zshrc/local.zsh ]] && source ~/.config/zshrc/local.zsh

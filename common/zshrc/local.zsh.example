@@ -1,0 +1,6 @@
+# Copy to ~/.config/zshrc/local.zsh (untracked) for machine-local shell tweaks:
+# aliases, functions, PATH, env vars. Sourced LAST by common.zsh, so anything
+# here overrides the shared config.
+#
+# export PATH="$HOME/some/local/bin:$PATH"
+# alias work='cd ~/project/work'
