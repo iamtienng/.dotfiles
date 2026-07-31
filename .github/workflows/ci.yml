@@ -35,7 +35,7 @@ jobs:
       - name: Validate package lists parse
         if: matrix.platform == 'arch'
         run: |
-          for f in arch/pkglist.txt wsl/pkglist.txt; do
+          for f in arch/pkglist.txt arch/pkglist-aur.txt wsl/pkglist.txt wsl/pkglist-aur.txt; do
             entries=$(grep -vE '^\s*#|^\s*$' "$f")
             [ -n "$entries" ] || { echo "::error::$f has no packages"; exit 1; }
             bad=$(printf '%s\n' "$entries" | grep -vE '^[A-Za-z0-9._+-]+$' || true)

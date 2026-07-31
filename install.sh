@@ -339,9 +339,9 @@ prepare_config_entry() {
   if [ "$REPLACE_EXISTING" -eq 1 ]; then
     local _reply
     warn "About to permanently delete: $target"
-    if [ -t 0 ]; then
+    if [ -r /dev/tty ]; then
       printf '[dotfiles] Remove %s? [y/N] ' "$target" >&2
-      read -r _reply
+      read -r _reply < /dev/tty
       case "$_reply" in
       y | Y | yes | YES) ;;
       *) die "aborted by user (existing config left untouched: $target)" ;;
