@@ -1,0 +1,41 @@
+# Shared git config (tracked, XDG: ~/.config/git/config).
+# Personal identity and work-only signing live in untracked local includes.
+# See config.local.example.
+
+[core]
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	default = simple
+
+[rebase]
+	autostash = true
+
+[fetch]
+	prune = true
+
+[alias]
+	st = status -sb
+	co = checkout
+	lg = log --oneline --graph --decorate
+	last = log -1 HEAD
+	undo = reset --soft HEAD~1
+	amend = commit --amend --no-edit
+
+[include]
+	path = ~/.config/git/config.local

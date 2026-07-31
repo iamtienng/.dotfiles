@@ -1,0 +1,24 @@
+# Copy to ~/.config/git/config.local (untracked) and fill in your identity.
+# Personal commits are UNSIGNED by default.
+#
+# [user]
+#     name = Your Name
+#     email = you@personal.example
+#
+# --- Work-only signing (optional) --------------------------------------------
+# Keep signing config OUT of the tracked repo. Add a conditional include that
+# points at an untracked work config, scoped to your work directory so personal
+# repos stay unsigned:
+#
+# [includeIf "gitdir:~/work/"]        # set to your real work directory
+#     path = ~/.config/git/config.work
+#
+# Then create ~/.config/git/config.work (untracked):
+#
+# [user]
+#     email = you@work.example
+#     signingkey = <GPG key id or fingerprint>
+# [commit]
+#     gpgsign = true
+# [gpg]
+#     format = openpgp     # GPG smartcard (e.g. YubiKey) via gpg-agent
