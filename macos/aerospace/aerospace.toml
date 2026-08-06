@@ -54,7 +54,7 @@ outer.top        = [{ monitor.'^built-in retina display$' = 0 }, 0]
 # --- Layout ---
 alt-slash       = 'layout tiles horizontal vertical'
 alt-shift-slash = 'layout accordion horizontal vertical'
-alt-ctrl-f      = 'layout floating'
+alt-ctrl-f      = 'layout floating tiling'
 alt-ctrl-shift-f = 'fullscreen'
 
 # --- Focus (vim-style) ---
