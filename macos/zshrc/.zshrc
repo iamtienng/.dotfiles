@@ -9,7 +9,6 @@ fi
 # PLATFORM ENV (macOS)
 # ============================================================
 # export SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
-# COSIGN_PASSWORD / OLLAMA_HOST come from the environment / .env (dotenv plugin).
 
 # Homebrew (early, so brew paths resolve for completions/plugins).
 # This sets HOMEBREW_PREFIX, used below instead of repeated `brew --prefix` forks.
@@ -91,6 +90,8 @@ alias brewdown="brew uninstall --cask --force --zap"
 # SHARED CONFIG
 # ============================================================
 source ~/.config/zshrc/common.zsh
+
+export VAULT_ADDR=$VAULT_ADDR
 
 # macOS completions that depend on compinit (cached via evalcache)
 if type bk &>/dev/null; then

@@ -16,6 +16,7 @@ brew "terragrunt"
 # brew "opentofu"
 tap "hashicorp/tap"
 brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/vault"
 
 # -- General
 brew "zsh"
