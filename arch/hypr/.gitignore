@@ -12,3 +12,7 @@
 !looknfeel.conf
 !monitor.conf
 !xdph.conf
+
+# Parked Lua-migration reference files (re-include the dir, then its files)
+!lua-migration/
+!lua-migration/*.lua
