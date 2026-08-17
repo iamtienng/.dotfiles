@@ -1,18 +1,19 @@
 **/*
 
 !.gitignore
-!autostart.conf
-!bindings.conf
+
+# Hyprland core config — migrated to Lua (Hyprland 0.55+ / Omarchy quattro).
+# Loaded via require() from hyprland.lua.
+!hyprland.lua
+!monitors.lua
+!input.lua
+!bindings.lua
+!looknfeel.lua
+!autostart.lua
+
+# Separate tools that did NOT move to Lua — still their own hyprlang .conf.
 !envs.conf
 !hypridle.conf
-!hyprland.conf
 !hyprlock.conf
 !hyprsunset.conf
-!input.conf
-!looknfeel.conf
-!monitor.conf
 !xdph.conf
-
-# Parked Lua-migration reference files (re-include the dir, then its files)
-!lua-migration/
-!lua-migration/*.lua

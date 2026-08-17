@@ -4,4 +4,3 @@
 --ignore='\.DS_Store'
 --ignore='\.gitignore'
 --ignore='README.*\.md'
---ignore='lua-migration'
