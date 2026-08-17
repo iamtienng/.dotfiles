@@ -9,6 +9,35 @@
 
 local mod = "SUPER"
 
+-- IMPORTANT: hl.bind ADDS a binding, it does not replace. Omarchy already
+-- binds several of these keys (terminal, browser, ...), so we must clear each
+-- key we redefine first — otherwise the key fires twice (double windows).
+for _, keys in ipairs({
+  mod .. " + RETURN",
+  mod .. " + SHIFT + RETURN",
+  mod .. " + SHIFT + F",
+  mod .. " + ALT + SHIFT + F",
+  mod .. " + SHIFT + B",
+  mod .. " + SHIFT + ALT + B",
+  mod .. " + SHIFT + D",
+  mod .. " + SHIFT + O",
+  mod .. " + R",
+  mod .. " + H",
+  mod .. " + J",
+  mod .. " + K",
+  mod .. " + L",
+  mod .. " + code:61",
+  mod .. " + ALT + code:61",
+  mod .. " + slash",
+  mod .. " + SHIFT + slash",
+  mod .. " + CTRL + F",
+  mod .. " + CTRL + SHIFT + F",
+  mod .. " + TAB",
+  mod .. " + SHIFT + TAB",
+}) do
+  hl.unbind(keys)
+end
+
 -- Application launchers ------------------------------------------------------
 o.bind(mod .. " + RETURN", "Terminal", [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)"]])
 o.bind(mod .. " + SHIFT + RETURN", "Browser", "omarchy-launch-browser")
@@ -18,12 +47,6 @@ o.bind(mod .. " + SHIFT + B", "Browser", "omarchy-launch-browser")
 o.bind(mod .. " + SHIFT + ALT + B", "Browser (private)", "omarchy-launch-browser --private")
 o.bind(mod .. " + SHIFT + D", "Docker", "omarchy-launch-tui lazydocker")
 o.bind(mod .. " + SHIFT + O", "Obsidian", [[omarchy-launch-or-focus ^obsidian$ "uwsm-app -- obsidian"]])
-
--- Unbind Omarchy defaults we override ----------------------------------------
-hl.unbind(mod .. " + L")
-hl.unbind(mod .. " + code:61")
-hl.unbind(mod .. " + ALT + code:61")
-hl.unbind(mod .. " + TAB")
 
 -- Service --------------------------------------------------------------------
 o.bind(mod .. " + R", "Reload Hyprland", "hyprctl reload")
