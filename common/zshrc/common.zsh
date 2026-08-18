@@ -14,7 +14,6 @@
 # Environment
 # ------------------------------------------------------------
 export LANG=en_US.UTF-8
-export DIRENV_LOG_FORMAT=""
 export EDITOR='nvim'
 export ENV="local"
 export GPG_TTY=$(tty)
